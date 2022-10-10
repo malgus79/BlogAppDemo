@@ -13,15 +13,13 @@ class MainActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         //Consultar informacion
-        db.collection("ciudades").document("NY").get().addOnSuccessListener { document ->
-            document.let {
+        db.collection("ciudades").document("NY").addSnapshotListener { value, error ->
+            value?.let { document ->
                 val ciudad = document.toObject(Ciudad::class.java)
                 Log.d("Firebase", "Color: ${ciudad?.color}")
                 Log.d("Firebase", "Population: ${ciudad?.population}")
                 Log.d("Firebase", "Postal code: ${ciudad?.cp}")
             }
-        }.addOnFailureListener { error ->
-            Log.d("FirebaseError", error.toString())
         }
 
         //Ingresar informacion
