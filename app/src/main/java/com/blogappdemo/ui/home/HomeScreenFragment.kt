@@ -2,36 +2,51 @@ package com.blogappdemo.ui.home
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.blogappdemo.R
-import com.blogappdemo.data.model.Post
+import com.blogappdemo.core.Resources
+import com.blogappdemo.data.remote.HomeScreenDataSource
 import com.blogappdemo.databinding.FragmentHomeScreenBinding
+import com.blogappdemo.domain.HomeScreenRepoImpl
+import com.blogappdemo.presentation.HomeScreenViewModel
+import com.blogappdemo.presentation.HomeScreenViewModelFactory
 import com.blogappdemo.ui.home.adapter.HomeScreenAdapter
-import com.google.firebase.Timestamp
 
 class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
 
     private lateinit var binding: FragmentHomeScreenBinding
+    private val viewModel by viewModels<HomeScreenViewModel> {
+        HomeScreenViewModelFactory(HomeScreenRepoImpl(
+            HomeScreenDataSource()))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeScreenBinding.bind(view)
 
-        val postList = listOf(
-            Post(
-                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTux2cCcnReia24DwLgdWan_zuWYclkUm2P2w&usqp=CAU",
-                "Cat",
-                Timestamp.now(),
-                "https://live.staticflickr.com/65535/48386006486_772affb4cf_b.jpg"),
-            Post("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRslhCv1GRj75J1FyLhF3CQ8142I_WZcAYAnQ&usqp=CAU",
-                "Face",
-                Timestamp.now(),
-                "https://upload.wikimedia.org/wikipedia/commons/a/af/User_profile_personal_details.png"),
-            Post("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1Clr2n4hdj_6T68FWG3lLOsz4uGigz_su7g&usqp=CAU",
-                "Wolf",
-                Timestamp.now(),
-                "https://www.wncoutdoors.info/wp-content/uploads/2021/05/2021-05-15_grandfather-mountain-state-park_profile-trail-upper-section-steps.jpg")
-        )
-        binding.rvHome.adapter = HomeScreenAdapter(postList)
+
+        viewModel.fetchLatestPosts().observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Resources.Loading -> {
+                    binding.progressBar.isVisible = true
+                }
+                is Resources.Success -> {
+                    binding.progressBar.isVisible = false
+                    binding.rvHome.adapter = HomeScreenAdapter(result.data)
+                }
+                is Resources.Failure -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(
+                        requireContext(),
+                        "Ocurrio un error: ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
     }
 }
