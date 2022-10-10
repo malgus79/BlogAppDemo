@@ -1,6 +1,5 @@
 package com.blogappdemo.data.model
 
-
 import java.sql.Timestamp
 
 data class Post(
