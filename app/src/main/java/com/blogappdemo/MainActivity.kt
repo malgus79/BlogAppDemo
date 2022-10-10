@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
+import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,7 +60,8 @@ class MainActivity : AppCompatActivity() {
     private fun uploadPicture(bitmap: Bitmap) {
         //crear una referencia en el storage
         val storageRef = FirebaseStorage.getInstance().reference
-        val imageRef = storageRef.child("image.jpg")
+        //generar un ID distinto para cada foto y guardarlo en una carpeta "imagenes"
+        val imageRef = storageRef.child("imagenes/${UUID.randomUUID()}.jpg")
         val baos = ByteArrayOutputStream()
         //comprimir la foto
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
