@@ -1,38 +1,54 @@
 package com.blogappdemo
 
+import android.app.Activity
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
+import android.provider.MediaStore
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var imageView: ImageView
+    private val REQUEST_IMAGE_CAPTURE = 1
+    private lateinit var resultLauncher: ActivityResultLauncher<Intent?>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val db = FirebaseFirestore.getInstance()
-
-        //Consultar informacion
-        db.collection("ciudades").document("NY").addSnapshotListener { value, error ->
-            value?.let { document ->
-                val ciudad = document.toObject(Ciudad::class.java)
-                Log.d("Firebase", "Color: ${ciudad?.color}")
-                Log.d("Firebase", "Population: ${ciudad?.population}")
-                Log.d("Firebase", "Postal code: ${ciudad?.cp}")
+        resultLauncher = registerForActivityResult(
+            ActivityResultContracts
+                .StartActivityForResult()
+        ){
+            if (it.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = it.data
+                val imageBitmap = data?.extras?.get("data") as Bitmap
+                imageView.setImageBitmap(imageBitmap)
             }
         }
 
-        //Ingresar informacion
-        db.collection("ciudades").document("LA").set(Ciudad(300000, "Red")).addOnSuccessListener {
-            Log.d("Firebase", "Se guardo la ciudad correctamente")
-        }.addOnFailureListener { error ->
-            Log.d("FirebaseError", error.toString())
+        imageView = findViewById(R.id.imageView)
+
+        val btnTakePicture = findViewById<Button>(R.id.btn_take_picture)
+        btnTakePicture.setOnClickListener {
+            dispatchTakePictureIntent()
+        }
+    }
+
+    //Intent para lanzar camara en dispositivo
+    private fun dispatchTakePictureIntent() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            resultLauncher.launch(takePictureIntent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(this, "No se encontro app para tomar la foto", Toast.LENGTH_SHORT).show()
         }
     }
 }
-
-data class Ciudad(
-    val population: Int = 0,
-    val color: String = "",
-    val cp: Int = 0
-)
