@@ -45,4 +45,6 @@ dependencies {
 
     //Firestore
     implementation 'com.google.firebase:firebase-firestore-ktx:24.3.1'
+    //Storage
+    implementation 'com.google.firebase:firebase-storage-ktx:20.0.2'
 }
