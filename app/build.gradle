@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'com.blogappdemo'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.blogappdemo"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -79,5 +79,5 @@ dependencies {
 
     //Play services coroutines
     //implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2"
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
 }
