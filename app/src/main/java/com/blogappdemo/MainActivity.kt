@@ -24,7 +24,5 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        throw java.lang.RuntimeException("Crashlytics test")
-
     }
 }
