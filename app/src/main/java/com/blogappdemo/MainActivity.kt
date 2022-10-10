@@ -13,9 +13,10 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import java.io.ByteArrayOutputStream
-import java.util.UUID
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -77,10 +78,15 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             imageRef.downloadUrl
-        //consumir el task
+            //consumir el task
         }.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result.toString()
+                //agregar foto al firestore
+                FirebaseFirestore.getInstance()
+                    .collection("ciudades")
+                    .document("LA")
+                    .update(mapOf("imageUrl" to downloadUri))
                 Log.d("Storage", "uploadPicture: $downloadUri")
             }
         }
