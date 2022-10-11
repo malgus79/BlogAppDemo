@@ -1,8 +1,8 @@
-package com.blogappdemo.domain
+package com.blogappdemo.domain.home
 
 import com.blogappdemo.core.Resources
 import com.blogappdemo.data.model.Post
-import com.blogappdemo.data.remote.HomeScreenDataSource
+import com.blogappdemo.data.remote.home.HomeScreenDataSource
 
 class HomeScreenRepoImpl(private val dataSource: HomeScreenDataSource): HomeScreenRepo {
 
