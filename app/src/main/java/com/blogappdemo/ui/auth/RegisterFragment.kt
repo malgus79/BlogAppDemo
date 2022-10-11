@@ -1,15 +1,27 @@
 package com.blogappdemo.ui.auth
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
+import com.blogappdemo.core.Result
+import com.blogappdemo.data.remote.auth.AuthDataSource
 import com.blogappdemo.databinding.FragmentRegisterBinding
+import com.blogappdemo.domain.auth.AuthRepoImpl
+import com.blogappdemo.presentation.auth.AuthViewModel
+import com.blogappdemo.presentation.auth.AuthViewModelFactory
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private lateinit var binding: FragmentRegisterBinding
+    private val viewModel by viewModels<AuthViewModel> {
+        AuthViewModelFactory(AuthRepoImpl(
+            AuthDataSource()))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -18,6 +30,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     }
 
+    //metodo para registrarse
     private fun signUp() {
         binding.btnSignup.setOnClickListener {
 
@@ -33,10 +46,31 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                     email)
             ) return@setOnClickListener
 
-            Log.d("signUpData", "data: $username $password $confirmPassword $email ")
+            createUser(email, password, username)
         }
     }
 
+    //crear usuario
+    private fun createUser(email: String, password: String, username: String) {
+        viewModel.signUp(email, password, username).observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.btnSignup.isEnabled = false
+                }
+                is Result.Success -> {
+                    binding.progressBar.isVisible = false
+                    findNavController().navigate(R.id.action_registerFragment_to_homeScreenFragment)
+                }
+                is Result.Failure -> {
+                    binding.progressBar.isVisible = false
+                    binding.btnSignup.isEnabled = true
+                }
+            }
+        })
+    }
+
+    //validacion de campos
     private fun validateUserData(
         password: String,
         confirmPassword: String,

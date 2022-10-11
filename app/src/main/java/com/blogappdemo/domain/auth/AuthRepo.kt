@@ -2,6 +2,8 @@ package com.blogappdemo.domain.auth
 
 import com.google.firebase.auth.FirebaseUser
 
-interface LoginRepo {
+interface AuthRepo {
     suspend fun signIn(email:String, password:String): FirebaseUser?
+    suspend fun signUp(email: String, password: String, username: String): FirebaseUser?
+
 }

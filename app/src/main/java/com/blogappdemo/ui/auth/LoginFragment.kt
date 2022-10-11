@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
-import com.blogappdemo.data.remote.auth.LoginDataSource
+import com.blogappdemo.data.remote.auth.AuthDataSource
 import com.blogappdemo.databinding.FragmentLoginBinding
-import com.blogappdemo.domain.auth.LoginRepoImpl
-import com.blogappdemo.presentation.auth.LoginScreenViewModel
-import com.blogappdemo.presentation.auth.LoginScreenViewModelFactory
+import com.blogappdemo.domain.auth.AuthRepoImpl
+import com.blogappdemo.presentation.auth.AuthViewModel
+import com.blogappdemo.presentation.auth.AuthViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
     private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val viewModel by viewModels<LoginScreenViewModel> {
-        LoginScreenViewModelFactory(LoginRepoImpl(
-            LoginDataSource()))
+    private val viewModel by viewModels<AuthViewModel> {
+        AuthViewModelFactory(AuthRepoImpl(
+            AuthDataSource()))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
