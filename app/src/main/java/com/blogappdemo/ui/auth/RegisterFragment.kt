@@ -27,33 +27,47 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             val email = binding.editTextEmail.text.toString().trim()
 
 
-            if (password != confirmPassword) {
-                binding.editTextConfirmPassword.error = "Password does not match"
-                binding.editTextPassword.error = "Password does not match"
-                return@setOnClickListener
-            }
-
-            if (username.isEmpty()) {
-                binding.editTextUsername.error = "Username is empty"
-                return@setOnClickListener
-            }
-
-            if (email.isEmpty()) {
-                binding.editTextEmail.error = "Email is empty"
-                return@setOnClickListener
-            }
-
-            if (password.isEmpty()) {
-                binding.editTextPassword.error = "Password is empty"
-                return@setOnClickListener
-            }
-
-            if (confirmPassword.isEmpty()) {
-                binding.editTextConfirmPassword.error = "Confirm Password is empty"
-                return@setOnClickListener
-            }
+            if (validateUserData(password,
+                    confirmPassword,
+                    username,
+                    email)
+            ) return@setOnClickListener
 
             Log.d("signUpData", "data: $username $password $confirmPassword $email ")
         }
+    }
+
+    private fun validateUserData(
+        password: String,
+        confirmPassword: String,
+        username: String,
+        email: String,
+    ): Boolean {
+        if (password != confirmPassword) {
+            binding.editTextConfirmPassword.error = "Password does not match"
+            binding.editTextPassword.error = "Password does not match"
+            return true
+        }
+
+        if (username.isEmpty()) {
+            binding.editTextUsername.error = "Username is empty"
+            return true
+        }
+
+        if (email.isEmpty()) {
+            binding.editTextEmail.error = "Email is empty"
+            return true
+        }
+
+        if (password.isEmpty()) {
+            binding.editTextPassword.error = "Password is empty"
+            return true
+        }
+
+        if (confirmPassword.isEmpty()) {
+            binding.editTextConfirmPassword.error = "Confirm Password is empty"
+            return true
+        }
+        return false
     }
 }
