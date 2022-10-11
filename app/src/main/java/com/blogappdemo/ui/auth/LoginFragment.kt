@@ -38,7 +38,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     //chequear si el usuario esta logeado y dirigirlo al home o al registro
     private fun isUserLoggedIn() {
         firebaseAuth.currentUser?.let { user ->
-            findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
+            if(user.displayName.isNullOrEmpty()) {
+                findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
+            }else{
+                findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
+            }
         }
     }
 
@@ -86,7 +90,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         "Welcome ${result.data?.email}",
                         Toast.LENGTH_SHORT
                     ).show()
-                    findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
+                    if(result.data?.displayName.isNullOrEmpty()) {
+                        findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
+                    }else{
+                        findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
+                    }
                 }
                 is Result.Failure -> {
                     binding.progressBar.isVisible = false
