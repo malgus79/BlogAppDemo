@@ -22,7 +22,6 @@ import com.blogappdemo.databinding.FragmentCameraBinding
 class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     private lateinit var binding: FragmentCameraBinding
-    private val REQUEST_IMAGE_CAPTURE = 2
     private var bitmap: Bitmap? = null
     private lateinit var resultLauncher: ActivityResultLauncher<Intent?>
 
