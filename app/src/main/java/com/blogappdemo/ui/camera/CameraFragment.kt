@@ -35,6 +35,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             dispatchTakePictureIntent()
         }
 
+        //solucion al onActivityResult @deprecated
         resultLauncher = registerForActivityResult(
             ActivityResultContracts
                 .StartActivityForResult()
