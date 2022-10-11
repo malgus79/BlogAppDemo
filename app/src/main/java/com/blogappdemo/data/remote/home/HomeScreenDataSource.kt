@@ -1,13 +1,13 @@
 package com.blogappdemo.data.remote.home
 
-import com.blogappdemo.core.Resources
+import com.blogappdemo.core.Result
 import com.blogappdemo.data.model.Post
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class HomeScreenDataSource {
     //datasource va a buscar la info en Firebase
-    suspend fun getLatestPosts(): Resources<List<Post>> {
+    suspend fun getLatestPosts(): Result<List<Post>> {
         //crearcion de una lista mutable de post
         val postList = mutableListOf<Post>()
         //peticion a firebase para traer esa peticion de post
@@ -19,6 +19,6 @@ class HomeScreenDataSource {
                 postList.add(fbPost)
             }
         }
-        return Resources.Success(postList)
+        return Result.Success(postList)
     }
 }

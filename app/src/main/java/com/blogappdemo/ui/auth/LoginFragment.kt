@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
-import com.blogappdemo.core.Resources
+import com.blogappdemo.core.Result
 import com.blogappdemo.data.remote.auth.LoginDataSource
 import com.blogappdemo.databinding.FragmentLoginBinding
 import com.blogappdemo.domain.auth.LoginRepoImpl
@@ -75,11 +75,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun signIn(email: String, password: String) {
         viewModel.signIn(email, password).observe(viewLifecycleOwner, Observer { result ->
             when (result) {
-                is Resources.Loading -> {
+                is Result.Loading -> {
                     binding.progressBar.isVisible = true
                     binding.btnSignin.isEnabled = false
                 }
-                is Resources.Success -> {
+                is Result.Success -> {
                     binding.progressBar.isVisible = false
                     Toast.makeText(
                         requireContext(),
@@ -88,7 +88,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     ).show()
                     findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
                 }
-                is Resources.Failure -> {
+                is Result.Failure -> {
                     binding.progressBar.isVisible = false
                     binding.btnSignin.isEnabled = true
                     Toast.makeText(
