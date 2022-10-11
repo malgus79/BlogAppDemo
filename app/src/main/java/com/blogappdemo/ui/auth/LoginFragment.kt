@@ -16,7 +16,6 @@ import com.blogappdemo.domain.auth.LoginRepoImpl
 import com.blogappdemo.presentation.auth.LoginScreenViewModel
 import com.blogappdemo.presentation.auth.LoginScreenViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
-import kotlin.math.sign
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
@@ -33,6 +32,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         isUserLoggedIn()
         doLogin()
+        goToSignUpPage()
     }
 
     //chequear si el usuario esta logeado y dirigirlo al home o al registro
@@ -52,6 +52,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
+    //navegar al fragment de registro
+    private fun goToSignUpPage() {
+        binding.txtSignup.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+    }
+
     //validacion de email y pass
     private fun validateCredentials(email: String, password: String) {
         if (email.isEmpty()) {
@@ -66,7 +73,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     //logear usuario con firebase
     private fun signIn(email: String, password: String) {
-        viewModel.signIn(email,password).observe(viewLifecycleOwner, Observer { result ->
+        viewModel.signIn(email, password).observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Resources.Loading -> {
                     binding.progressBar.isVisible = true
@@ -79,7 +86,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         "Welcome ${result.data?.email}",
                         Toast.LENGTH_SHORT
                     ).show()
-                        findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
                 }
                 is Resources.Failure -> {
                     binding.progressBar.isVisible = false
