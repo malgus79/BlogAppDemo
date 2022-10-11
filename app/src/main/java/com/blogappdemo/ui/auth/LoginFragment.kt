@@ -2,16 +2,30 @@ package com.blogappdemo.ui.auth
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
+import com.blogappdemo.core.Resources
+import com.blogappdemo.data.remote.auth.LoginDataSource
 import com.blogappdemo.databinding.FragmentLoginBinding
+import com.blogappdemo.domain.auth.LoginRepoImpl
+import com.blogappdemo.presentation.auth.LoginScreenViewModel
+import com.blogappdemo.presentation.auth.LoginScreenViewModelFactory
 import com.google.firebase.auth.FirebaseAuth
+import kotlin.math.sign
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
     private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val viewModel by viewModels<LoginScreenViewModel> {
+        LoginScreenViewModelFactory(LoginRepoImpl(
+            LoginDataSource()))
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,6 +48,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
             validateCredentials(email, password)
+            signIn(email, password)
         }
     }
 
@@ -51,6 +66,31 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     //logear usuario con firebase
     private fun signIn(email: String, password: String) {
+        viewModel.signIn(email,password).observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Resources.Loading -> {
+                    binding.progressBar.isVisible = true
+                    binding.btnSignin.isEnabled = false
+                }
+                is Resources.Success -> {
+                    binding.progressBar.isVisible = false
+                    Toast.makeText(
+                        requireContext(),
+                        "Welcome ${result.data?.email}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                        findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
+                }
+                is Resources.Failure -> {
+                    binding.progressBar.isVisible = false
+                    binding.btnSignin.isEnabled = true
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
     }
-
 }
