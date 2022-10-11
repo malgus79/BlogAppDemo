@@ -24,5 +24,6 @@ class MainActivity : AppCompatActivity() {
         //configurar el bottomnavigation -> atachar al NavHost
         binding.bottomNavigationView.setupWithNavController(navController)
 
+
     }
 }
