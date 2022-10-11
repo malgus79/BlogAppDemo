@@ -12,8 +12,8 @@ import com.blogappdemo.core.Resources
 import com.blogappdemo.data.remote.HomeScreenDataSource
 import com.blogappdemo.databinding.FragmentHomeScreenBinding
 import com.blogappdemo.domain.HomeScreenRepoImpl
-import com.blogappdemo.presentation.HomeScreenViewModel
-import com.blogappdemo.presentation.HomeScreenViewModelFactory
+import com.blogappdemo.presentation.home.HomeScreenViewModel
+import com.blogappdemo.presentation.home.HomeScreenViewModelFactory
 import com.blogappdemo.ui.main.adapter.HomeScreenAdapter
 
 class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
