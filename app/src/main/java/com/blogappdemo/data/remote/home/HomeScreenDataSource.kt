@@ -12,7 +12,7 @@ class HomeScreenDataSource {
         val postList = mutableListOf<Post>()
         //peticion a firebase para traer esa peticion de post
         //await: si falla la coroutina devuelve el cancetatioinExceltion
-        val querySnapshot = FirebaseFirestore.getInstance().collection("post").get().await()
+        val querySnapshot = FirebaseFirestore.getInstance().collection("posts").get().await()
         for (post in querySnapshot.documents) {
             //transformar el post.document de firebase al modelo de Post (data)
             post.toObject(Post::class.java)?.let { fbPost ->

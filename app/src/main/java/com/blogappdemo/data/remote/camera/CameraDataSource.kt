@@ -1,15 +1,16 @@
 package com.blogappdemo.data.remote.camera
 
 import android.graphics.Bitmap
+import com.blogappdemo.data.model.Post
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.util.*
-import com.blogappdemo.data.model.Post
 
 class CameraDataSource {
+
     suspend fun uploadPhoto(imageBitmap: Bitmap, description: String) {
         val user = FirebaseAuth.getInstance().currentUser
         val randomName = UUID.randomUUID().toString()
@@ -24,7 +25,8 @@ class CameraDataSource {
                     profile_name = displayName,
                     profile_picture = it.photoUrl.toString(),
                     post_image = downloadUrl,
-                    post_description = description))
+                    post_description = description,
+                    uid = user.uid))
             }
         }
     }

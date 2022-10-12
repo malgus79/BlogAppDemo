@@ -54,7 +54,15 @@
         android:id="@+id/cameraFragment"
         android:name="com.blogappdemo.ui.camera.CameraFragment"
         android:label="fragment_camera"
-        tools:layout="@layout/fragment_camera" />
+        tools:layout="@layout/fragment_camera" >
+        <action
+            android:id="@+id/action_cameraFragment_to_homeScreenFragment"
+            app:destination="@id/homeScreenFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.blogappdemo.ui.profile.ProfileFragment"
