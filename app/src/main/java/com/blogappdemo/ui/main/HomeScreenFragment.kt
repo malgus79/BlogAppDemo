@@ -1,9 +1,9 @@
 package com.blogappdemo.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -61,7 +61,26 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         })
     }
 
+    //al hacer click en likes
     override fun onLikeButtonClick(post: Post, liked: Boolean) {
-        TODO("Not yet implemented")
+        viewModel.registerLikeButtonState(post.id, liked).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    Log.d("Like Transaction","in progress...")
+                }
+
+                is Result.Success -> {
+                    Log.d("Like Transaction","Success")
+                }
+
+                is Result.Failure -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Ocurrio un error: ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }
