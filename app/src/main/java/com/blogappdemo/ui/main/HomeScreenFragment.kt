@@ -31,6 +31,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
         binding = FragmentHomeScreenBinding.bind(view)
 
 
+        //obtener data de <post>
         viewModel.fetchLatestPosts().observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Loading -> {
