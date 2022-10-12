@@ -27,10 +27,21 @@ class HomeScreenDataSource {
                 //transformar el post.document de firebase al modelo de Post (data)
                 post.toObject(Post::class.java)?.let { fbPost ->
 
+                    //ejecutar metodo de verificacion del likes
+                    val isLiked = FirebaseAuth.getInstance().currentUser?.let { safeUser ->
+                        isPostLiked(post.id, safeUser.uid)
+                    }
+
                     //estimar fecha en el caso de que sea nula en el momento que está en el server
                     fbPost.apply {
                         created_at = post.getTimestamp("created_at",
                             DocumentSnapshot.ServerTimestampBehavior.ESTIMATE)?.toDate()
+
+                        //poner al post el valor (true/false) si esta o no likeado
+                        id = post.id
+                        if(isLiked != null) {
+                            liked = isLiked
+                        }
                     }
                     postList.add(fbPost)
                 }
@@ -39,12 +50,13 @@ class HomeScreenDataSource {
         return Result.Success(postList)
     }
 
-//    private suspend fun isPostLiked(postId: String, uid: String): Boolean {
-//        val post = FirebaseFirestore.getInstance().collection("postsLikes").document(postId).get().await()
-//        if(!post.exists()) return false
-//        val likeArray: List<String> = post.get("likes") as List<String>
-//        return likeArray.contains(uid)
-//    }
+    //verificar si el array contiene el usuario (si esta likeado el post)
+    private suspend fun isPostLiked(postId: String, uid: String): Boolean {
+        val post = FirebaseFirestore.getInstance().collection("postsLikes").document(postId).get().await()
+        if(!post.exists()) return false
+        val likeArray: List<String> = post.get("likes") as List<String>
+        return likeArray.contains(uid)
+    }
 
     fun registerLikeButtonState(postId: String, liked: Boolean) {
 

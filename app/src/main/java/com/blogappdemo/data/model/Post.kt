@@ -6,7 +6,7 @@ import java.util.*
 
 data class Post(
     @Exclude @JvmField  //para excluir de firebase
-    val id: String = "",
+    var id: String = "",
     @ServerTimestamp  //transformar la info que viene de firebase que lo mapea a date
     var created_at: Date? = null,
     val post_image: String = "",
