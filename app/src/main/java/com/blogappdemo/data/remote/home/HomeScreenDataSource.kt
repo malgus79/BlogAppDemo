@@ -2,6 +2,7 @@ package com.blogappdemo.data.remote.home
 
 import com.blogappdemo.core.Result
 import com.blogappdemo.data.model.Post
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
@@ -16,7 +17,11 @@ class HomeScreenDataSource {
         for (post in querySnapshot.documents) {
             //transformar el post.document de firebase al modelo de Post (data)
             post.toObject(Post::class.java)?.let { fbPost ->
-                postList.add(fbPost)
+
+                //estimar fecha en el caso de que sea nula en el momento que está en el server
+                fbPost.apply {
+                    created_at = post.getTimestamp("created_at", DocumentSnapshot.ServerTimestampBehavior.ESTIMATE)?.toDate() }
+                    postList.add(fbPost)
             }
         }
         return Result.Success(postList)
