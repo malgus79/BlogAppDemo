@@ -28,4 +28,11 @@
         android:layout_marginTop="16dp"
         android:text="upload photo"/>
 
+    <Button
+        android:id="@+id/btn_take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="take photo"/>
+
 </LinearLayout>

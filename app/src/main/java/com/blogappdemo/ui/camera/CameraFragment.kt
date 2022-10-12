@@ -29,24 +29,32 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCameraBinding.bind(view)
 
+        binding.btnTakePhoto.setOnClickListener {
+            openCamera()
+        }
+
         //solucion al onActivityResult @deprecated
         resultLauncher = registerForActivityResult(
             ActivityResultContracts
                 .StartActivityForResult()
-        ){
+        ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val imageBitmap = it.data?.extras?.get("data") as Bitmap
                 binding.postImage.setImageBitmap(imageBitmap)
                 bitmap = imageBitmap
             }
         }
+    }
 
-        //abrir la camara
+    //abrir la camara
+    private fun openCamera() {
         try {
             val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             resultLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(requireContext(), "No se encontro app para abir la camara", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                "No se encontro app para abir la camara",
+                Toast.LENGTH_SHORT).show()
         }
     }
 
