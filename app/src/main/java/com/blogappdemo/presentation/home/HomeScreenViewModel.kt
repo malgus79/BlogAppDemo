@@ -14,19 +14,12 @@ class HomeScreenViewModel(private val repo: HomeScreenRepo): ViewModel() {
     fun fetchLatestPosts() = liveData(Dispatchers.IO) {
         //emitir valor de carga
         emit(Result.Loading())
-        /* TODO reemplazado al migrar a flow
-        try {
-            emit(repo.getLatestPosts())
-        }catch (e:Exception) {
-            emit(Result.Failure(e))
-        }
-         */
 
         kotlin.runCatching {
             //operacion a ejecutar en el servidor
             repo.getLatestPosts()
-        }.onSuccess { flowList ->
-            flowList.collectLatest { emit(it) }
+        }.onSuccess { postList ->
+            emit(postList)
         }.onFailure { throwable ->
             emit(Result.Failure(Exception(throwable.message)))
         }
