@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
+import com.blogappdemo.core.hide
+import com.blogappdemo.core.show
 import com.blogappdemo.data.remote.home.HomeScreenDataSource
 import com.blogappdemo.databinding.FragmentHomeScreenBinding
 import com.blogappdemo.domain.home.HomeScreenRepoImpl
@@ -32,14 +34,20 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
         viewModel.fetchLatestPosts().observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.progressBar.isVisible = true
+                    binding.progressBar.show()
                 }
                 is Result.Success -> {
-                    binding.progressBar.isVisible = false
+                    binding.progressBar.hide()
+                    if(result.data.isEmpty()) {
+                        binding.emptyContainer.show()
+                        return@Observer
+                    }else{
+                        binding.emptyContainer.hide()
+                    }
                     binding.rvHome.adapter = HomeScreenAdapter(result.data)
                 }
                 is Result.Failure -> {
-                    binding.progressBar.isVisible = false
+                    binding.progressBar.hide()
                     Toast.makeText(
                         requireContext(),
                         "Ocurrio un error: ${result.exception}",
