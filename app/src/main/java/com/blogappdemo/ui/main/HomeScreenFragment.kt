@@ -11,14 +11,16 @@ import com.blogappdemo.R
 import com.blogappdemo.core.Result
 import com.blogappdemo.core.hide
 import com.blogappdemo.core.show
+import com.blogappdemo.data.model.Post
 import com.blogappdemo.data.remote.home.HomeScreenDataSource
 import com.blogappdemo.databinding.FragmentHomeScreenBinding
 import com.blogappdemo.domain.home.HomeScreenRepoImpl
 import com.blogappdemo.presentation.home.HomeScreenViewModel
 import com.blogappdemo.presentation.home.HomeScreenViewModelFactory
 import com.blogappdemo.ui.main.adapter.HomeScreenAdapter
+import com.blogappdemo.ui.main.adapter.OnPostClickListener
 
-class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
+class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickListener {
 
     private lateinit var binding: FragmentHomeScreenBinding
     private val viewModel by viewModels<HomeScreenViewModel> {
@@ -45,7 +47,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
                     }else{
                         binding.emptyContainer.hide()
                     }
-                    binding.rvHome.adapter = HomeScreenAdapter(result.data)
+                    binding.rvHome.adapter = HomeScreenAdapter(result.data, this)
                 }
                 is Result.Failure -> {
                     binding.progressBar.hide()
@@ -57,5 +59,9 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen) {
                 }
             }
         })
+    }
+
+    override fun onLikeButtonClick(post: Post, liked: Boolean) {
+        TODO("Not yet implemented")
     }
 }

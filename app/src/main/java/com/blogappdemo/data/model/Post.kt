@@ -14,7 +14,7 @@ data class Post(
     val poster: Poster? = null,
     val likes: Long = 0,
     @Exclude @JvmField //para excluir de firebase
-    val liked: Boolean = false,
+    var liked: Boolean = false,
 )
 
 data class Poster(
