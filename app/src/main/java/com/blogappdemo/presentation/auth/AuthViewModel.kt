@@ -4,7 +4,6 @@ import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import com.blogappdemo.core.Result
 import com.blogappdemo.domain.auth.AuthRepo
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
 
     //metodo de logeo
-    fun signIn(email: String, password: String) = liveData( Dispatchers.Main) {
+    fun signIn(email: String, password: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading())
         try {
             emit(Result.Success(repo.signIn(email, password)))
@@ -35,7 +34,7 @@ class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
     fun updateUserProfile(imageBitmap: Bitmap, username: String) = liveData(Dispatchers.Main) {
         emit(Result.Loading())
         try {
-            emit(Result.Success(repo.updateProfile(imageBitmap,username)))
+            emit(Result.Success(repo.updateProfile(imageBitmap, username)))
         } catch (e: Exception) {
             emit(Result.Failure(e))
         }
