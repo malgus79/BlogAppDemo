@@ -4,6 +4,7 @@ import com.blogappdemo.core.Result
 import com.blogappdemo.data.model.Post
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.tasks.await
 
 class HomeScreenDataSource {
@@ -13,7 +14,8 @@ class HomeScreenDataSource {
         val postList = mutableListOf<Post>()
         //peticion a firebase para traer esa peticion de post
         //await: si falla la coroutina devuelve el cancetatioinExceltion
-        val querySnapshot = FirebaseFirestore.getInstance().collection("posts").get().await()
+        val querySnapshot = FirebaseFirestore.getInstance().collection("posts")
+            .orderBy("created_at", Query.Direction.ASCENDING).get().await()
         for (post in querySnapshot.documents) {
             //transformar el post.document de firebase al modelo de Post (data)
             post.toObject(Post::class.java)?.let { fbPost ->
