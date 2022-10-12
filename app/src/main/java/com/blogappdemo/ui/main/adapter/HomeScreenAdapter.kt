@@ -45,8 +45,8 @@ class HomeScreenAdapter(private val postList: List<Post>) :
 
         //foto de perfil y nombre del usuario
         private fun setupProfileInfo(post: Post) {
-            Glide.with(context).load(post.profile_picture).centerCrop().into(binding.profilePicture)
-            binding.profileName.text = post.profile_name
+            Glide.with(context).load(post.poster?.profile_picture).centerCrop().into(binding.profilePicture)
+            binding.profileName.text = post.poster?.username
         }
 
         //timestamp
