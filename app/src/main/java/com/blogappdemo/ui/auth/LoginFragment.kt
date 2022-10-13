@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
+import com.blogappdemo.core.hideKeyboard
 import com.blogappdemo.data.remote.auth.AuthDataSource
 import com.blogappdemo.databinding.FragmentLoginBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl
@@ -49,6 +50,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     //obtener email y pass y hacer login
     private fun doLogin() {
         binding.btnSignin.setOnClickListener {
+            it.hideKeyboard()
             val email = binding.editTextEmail.text.toString().trim()
             val password = binding.editTextPassword.text.toString().trim()
             validateCredentials(email, password)
