@@ -8,27 +8,33 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
 class AuthDataSource {
 
     //login
     suspend fun signIn(email: String, password: String): FirebaseUser? {
-        val authResult =
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
-        return authResult.user
+        return withContext(Dispatchers.IO) {
+            val authResult =
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).await()
+            authResult.user
+        }
     }
 
     //register
     suspend fun signUp(email: String, password: String, username: String): FirebaseUser? {
-        val authResult =
-            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()
-        authResult.user?.uid?.let { uid ->
-            FirebaseFirestore.getInstance().collection("users").document(uid).set(
-                User(email, username)).await()
+        return withContext(Dispatchers.IO) {
+            val authResult =
+                FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()
+            authResult.user?.uid?.let { uid ->
+                FirebaseFirestore.getInstance().collection("users").document(uid).set(
+                    User(email, username)).await()
+            }
+            authResult.user
         }
-        return authResult.user
     }
 
     //actualizar perfil de usuario
@@ -40,7 +46,8 @@ class AuthDataSource {
         //obtener la uri de la foto
         val baos = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        var downloadUrl = imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
+        var downloadUrl =
+            imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
         //setear la foto al profile
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setDisplayName(username)

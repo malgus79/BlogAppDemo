@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
 
     //metodo de logeo
-    fun signIn(email: String, password: String) = liveData(Dispatchers.IO) {
+    fun signIn(email: String, password: String) = liveData(Dispatchers.Main) {
         emit(Result.Loading())
         try {
             emit(Result.Success(repo.signIn(email, password)))

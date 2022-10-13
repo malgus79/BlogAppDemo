@@ -3,14 +3,12 @@ package com.blogappdemo.ui.auth
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
-import com.blogappdemo.core.Result
-import com.blogappdemo.core.hideKeyboard
+import com.blogappdemo.core.*
 import com.blogappdemo.data.remote.auth.AuthDataSource
 import com.blogappdemo.databinding.FragmentLoginBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl
@@ -82,11 +80,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         viewModel.signIn(email, password).observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.progressBar.isVisible = true
-                    binding.btnSignin.isEnabled = false
+                    binding.progressBar.show()
+                    binding.btnSignin.disable()
                 }
                 is Result.Success -> {
-                    binding.progressBar.isVisible = false
+                    binding.progressBar.hide()
                     Toast.makeText(
                         requireContext(),
                         "Welcome ${result.data?.email}",
@@ -99,8 +97,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     }
                 }
                 is Result.Failure -> {
-                    binding.progressBar.isVisible = false
-                    binding.btnSignin.isEnabled = true
+                    binding.progressBar.hide()
+                    binding.btnSignin.enable()
                     Toast.makeText(
                         requireContext(),
                         "Error: ${result.exception}",

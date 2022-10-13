@@ -1,14 +1,14 @@
 package com.blogappdemo.ui.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
-import com.blogappdemo.core.Result
+import com.blogappdemo.core.*
 import com.blogappdemo.data.remote.auth.AuthDataSource
 import com.blogappdemo.databinding.FragmentRegisterBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl
@@ -47,6 +47,8 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             ) return@setOnClickListener
 
             createUser(email, password, username)
+
+            Log.d("signUpData", "data: $username $password $confirmPassword $email ")
         }
     }
 
@@ -55,16 +57,16 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         viewModel.signUp(email, password, username).observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.progressBar.isVisible = true
-                    binding.btnSignup.isEnabled = false
+                    binding.progressBar.show()
+                    binding.btnSignup.disable()
                 }
                 is Result.Success -> {
-                    binding.progressBar.isVisible = false
+                    binding.progressBar.hide()
                     findNavController().navigate(R.id.action_registerFragment_to_setupProfileFragment)
                 }
                 is Result.Failure -> {
-                    binding.progressBar.isVisible = false
-                    binding.btnSignup.isEnabled = true
+                    binding.progressBar.hide()
+                    binding.btnSignup.enable()
                 }
             }
         })

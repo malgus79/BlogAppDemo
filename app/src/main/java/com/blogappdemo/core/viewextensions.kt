@@ -15,6 +15,16 @@ fun View.show() {
     this.isVisible = true
 }
 
+//habilitar view
+fun View.enable() {
+    this.isEnabled = true
+}
+
+//deshabilitar view
+fun View.disable() {
+    this.isEnabled = false
+}
+
 //ocultar teclado
 fun View.hideKeyboard() {
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
