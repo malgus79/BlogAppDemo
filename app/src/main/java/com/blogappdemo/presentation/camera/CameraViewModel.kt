@@ -11,7 +11,7 @@ import com.blogappdemo.domain.camera.CameraRepo
 
 class CameraViewModel(private val repo: CameraRepo) : ViewModel() {
 
-    fun uploadPhoto(imageBitmap: Bitmap, description: String) = liveData(Dispatchers.Main) {
+    fun uploadPhoto(imageBitmap: Bitmap, description: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading())
         try {
             emit(Result.Success(repo.uploadPhoto(imageBitmap, description)))

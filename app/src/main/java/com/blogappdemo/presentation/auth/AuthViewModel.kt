@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
 
     //metodo de logeo
-    fun signIn(email: String, password: String) = liveData(Dispatchers.Main) {
+    fun signIn(email: String, password: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading())
         try {
             emit(Result.Success(repo.signIn(email, password)))
@@ -21,7 +21,7 @@ class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
     }
 
     //metodo para registrar usuario
-    fun signUp(email: String, password: String, username: String) = liveData(Dispatchers.Main) {
+    fun signUp(email: String, password: String, username: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading())
         try {
             emit(Result.Success(repo.signUp(email, password, username)))
@@ -31,7 +31,7 @@ class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
     }
 
     //actualizar perfil de usuario
-    fun updateUserProfile(imageBitmap: Bitmap, username: String) = liveData(Dispatchers.Main) {
+    fun updateUserProfile(imageBitmap: Bitmap, username: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading())
         try {
             emit(Result.Success(repo.updateProfile(imageBitmap, username)))

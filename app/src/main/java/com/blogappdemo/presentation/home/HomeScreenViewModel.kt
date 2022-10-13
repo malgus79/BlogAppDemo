@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 class HomeScreenViewModel(private val repo: HomeScreenRepo): ViewModel() {
 
     //solicitar info al repo en un hilo secundario (Dispacher.IO)
-    fun fetchLatestPosts() = liveData(Dispatchers.Main) {
+    fun fetchLatestPosts() = liveData(Dispatchers.IO) {
         //emitir valor de carga
         emit(Result.Loading())
 
@@ -25,7 +25,7 @@ class HomeScreenViewModel(private val repo: HomeScreenRepo): ViewModel() {
         }
     }
 
-    fun registerLikeButtonState(postId: String, liked: Boolean) = liveData(Dispatchers.Main) {
+    fun registerLikeButtonState(postId: String, liked: Boolean) = liveData(Dispatchers.IO) {
         emit(Result.Loading())
         kotlin.runCatching {
             repo.registerLikeButtonState(postId, liked)
