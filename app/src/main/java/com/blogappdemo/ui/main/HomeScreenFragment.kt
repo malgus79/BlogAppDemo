@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -32,6 +33,10 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeScreenBinding.bind(view)
 
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            requireActivity().finish()
+        }
+        callback.isEnabled
 
         //obtener data de <post>
         viewModel.fetchLatestPosts().observe(viewLifecycleOwner, Observer { result ->
@@ -41,10 +46,10 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                 }
                 is Result.Success -> {
                     binding.progressBar.hide()
-                    if(result.data.isEmpty()) {
+                    if (result.data.isEmpty()) {
                         binding.emptyContainer.show()
                         return@Observer
-                    }else{
+                    } else {
                         binding.emptyContainer.hide()
                     }
                     binding.rvHome.adapter = HomeScreenAdapter(result.data, this)
@@ -66,11 +71,11 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         viewModel.registerLikeButtonState(post.id, liked).observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
-                    Log.d("Like Transaction","in progress...")
+                    Log.d("Like Transaction", "in progress...")
                 }
 
                 is Result.Success -> {
-                    Log.d("Like Transaction","Success")
+                    Log.d("Like Transaction", "Success")
                 }
 
                 is Result.Failure -> {
