@@ -80,4 +80,11 @@ dependencies {
     //Play services coroutines
     //implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.2"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
+
+    //StateFlow
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    //Lifecycle
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01"
 }

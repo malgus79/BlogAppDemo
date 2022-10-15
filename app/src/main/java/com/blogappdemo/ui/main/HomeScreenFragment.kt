@@ -7,7 +7,9 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
 import com.blogappdemo.core.hide
@@ -20,6 +22,8 @@ import com.blogappdemo.presentation.home.HomeScreenViewModel
 import com.blogappdemo.presentation.home.HomeScreenViewModelFactory
 import com.blogappdemo.ui.main.adapter.HomeScreenAdapter
 import com.blogappdemo.ui.main.adapter.OnPostClickListener
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickListener {
 
@@ -38,32 +42,66 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         }
         callback.isEnabled
 
-        //obtener data de <post>
-        viewModel.fetchLatestPosts().observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Result.Loading -> {
-                    binding.progressBar.show()
-                }
-                is Result.Success -> {
-                    binding.progressBar.hide()
-                    if (result.data.isEmpty()) {
-                        binding.emptyContainer.show()
-                        return@Observer
-                    } else {
-                        binding.emptyContainer.hide()
+        //obtener data de <post> segun el lifecycle con stateFlow
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                viewModel.latestPosts.collectLatest { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            binding.progressBar.show()
+                        }
+
+                        is Result.Success -> {
+                            binding.progressBar.hide()
+                            if (result.data.isEmpty()) {
+                                binding.emptyContainer.show()
+                                return@collectLatest
+                            } else {
+                                binding.emptyContainer.hide()
+                            }
+                            binding.rvHome.adapter = HomeScreenAdapter(result.data, this@HomeScreenFragment)
+                        }
+
+                        is Result.Failure -> {
+                            binding.progressBar.hide()
+                            Toast.makeText(
+                                requireContext(),
+                                "Ocurrio un error: ${result.exception}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                    binding.rvHome.adapter = HomeScreenAdapter(result.data, this)
-                }
-                is Result.Failure -> {
-                    binding.progressBar.hide()
-                    Toast.makeText(
-                        requireContext(),
-                        "Ocurrio un error: ${result.exception}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
-        })
+        }
+
+//        //obtener data de <post>
+//        viewModel.fetchLatestPosts().observe(viewLifecycleOwner, Observer { result ->
+//            when (result) {
+//                is Result.Loading -> {
+//                    binding.progressBar.show()
+//                }
+//                is Result.Success -> {
+//                    binding.progressBar.hide()
+//                    if (result.data.isEmpty()) {
+//                        binding.emptyContainer.show()
+//                        return@Observer
+//                    } else {
+//                        binding.emptyContainer.hide()
+//                    }
+//                    binding.rvHome.adapter = HomeScreenAdapter(result.data, this)
+//                }
+//                is Result.Failure -> {
+//                    binding.progressBar.hide()
+//                    Toast.makeText(
+//                        requireContext(),
+//                        "Ocurrio un error: ${result.exception}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
+//            }
+//        })
     }
 
     //al hacer click en likes
