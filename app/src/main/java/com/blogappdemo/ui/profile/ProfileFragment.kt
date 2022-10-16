@@ -22,7 +22,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val user = FirebaseAuth.getInstance().currentUser
         Glide.with(this).load(user?.photoUrl).centerCrop().into(binding.imgProfile)
         binding.imgProfile
-        binding.txtProfileName.text = user?.displayName
+        binding.txtProfileNickname.text = user?.displayName
+        binding.txtProfileEmail.text = user?.email
         Log.d("Usuario:", "fotourl: ${user?.photoUrl} , nombre: ${user?.displayName} ")
     }
 }

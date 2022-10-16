@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Padding -->
+    <dimen name="padding_min">8dp</dimen>
+    <dimen name="padding_default">16dp</dimen>
+    <dimen name="padding_middle">24dp</dimen>
+
+    <!-- Marging -->
+    <dimen name="margin_min">8dp</dimen>
+    <dimen name="margin_default">16dp</dimen>
+    <dimen name="margin_middle">24dp</dimen>
+
+    <!-- Size -->
+    <dimen name="size_min">10sp</dimen>
+    <dimen name="size_default">15sp</dimen>
+    <dimen name="size_middle">20sp</dimen>
+
+</resources>
