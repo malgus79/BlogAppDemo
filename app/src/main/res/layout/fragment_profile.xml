@@ -47,14 +47,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="232dp" />
-
     <TextView
         android:id="@+id/txt_profile_name"
         android:layout_width="wrap_content"
@@ -63,24 +55,13 @@
         android:fontFamily="monospace"
         android:textSize="@dimen/size_max"
         android:textStyle="bold"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/txt_profile_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linear_img_profile"
         tools:text="El Chicho" />
 
-    <Button
-        android:id="@+id/btn_edit_name"
-        android:layout_width="60dp"
-        android:layout_height="70dp"
-        android:backgroundTint="@color/grey"
-        android:scaleX=".8"
-        android:scaleY=".8"
-        app:cornerRadius="40dp"
-        app:icon="@drawable/ic_edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/txt_profile_name"
-        app:layout_constraintTop_toTopOf="@id/guideline" />
 
     <TextView
         android:id="@+id/txt_profile_email"
@@ -88,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_min"
         android:textSize="@dimen/size_default"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/txt_profile_name"

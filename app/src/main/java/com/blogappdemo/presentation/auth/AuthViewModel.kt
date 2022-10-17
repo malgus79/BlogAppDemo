@@ -40,16 +40,6 @@ class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
             emit(Result.Failure(e))
         }
     }
-
-    //actualizar perfil de usuario: solo imagen
-    fun updateUserProfileImage(imageBitmap: Bitmap) = liveData(Dispatchers.IO) {
-        emit(Result.Loading())
-        try {
-            emit(Result.Success(repo.updateProfileImage(imageBitmap)))
-        } catch (e: Exception) {
-            emit(Result.Failure(e))
-        }
-    }
 }
 
 class AuthViewModelFactory(private val repo: AuthRepo) : ViewModelProvider.Factory {

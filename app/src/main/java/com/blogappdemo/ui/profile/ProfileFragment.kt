@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -14,7 +13,6 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.blogappdemo.R
@@ -51,19 +49,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.txtProfileEmail.text = user?.email
         Log.d("Usuario:", "fotourl: ${user?.photoUrl} , nombre: ${user?.displayName} ")
 
-
-        binding.btnEditImage.setOnClickListener {
-            editImageProfile()
-            binding.btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.yellow))
-            binding.btnEditImage.setIconTintResource(R.color.purple_700)
-            binding.btnEditConfirm.show()
-        }
-
         //solucion al onActivityResult @deprecated
         resultLauncher = registerForActivityResult(
             ActivityResultContracts
                 .StartActivityForResult()
-        ){
+        ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = it.data
                 val imageBitmap = data?.extras?.get("data")
@@ -72,12 +62,22 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             }
         }
 
+        //editar imagen de perfil
+        binding.btnEditImage.setOnClickListener {
+            editImageProfile()
+            binding.btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.yellow))
+            binding.btnEditImage.setIconTintResource(R.color.purple_700)
+            binding.btnEditConfirm.show()
+        }
+
+
         binding.btnEditConfirm.setOnClickListener {
             val username = binding.txtProfileName.text.toString().trim()
-            val alertDialog = AlertDialog.Builder(requireContext()).setTitle("Uploading changes...").create()
+            val alertDialog =
+                AlertDialog.Builder(requireContext()).setTitle("Uploading changes...").create()
             bitmap?.let {
                 if (username.isNotEmpty()) {
-                    viewModel.updateUserProfileImage(imageBitmap = it).observe(viewLifecycleOwner) { result ->
+                    viewModel.updateUserProfile(imageBitmap = it, username = username).observe(viewLifecycleOwner) { result ->
                         when (result) {
                             is Result.Loading -> {
                                 alertDialog.show()
@@ -104,8 +104,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         try {
             resultLauncher.launch(intent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(requireContext(), "No se pudo acceder a la galeria", Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(requireContext(),"No se encontro app para abir la camara", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -55,23 +55,4 @@ class AuthDataSource {
             .build()
         user?.updateProfile(profileUpdates)?.await()
     }
-
-    //actualizar perfil de usuario: solo imagen
-    suspend fun updateUserProfileImage(imageBitmap: Bitmap) {
-        //credencial de usuario
-        val user = FirebaseAuth.getInstance().currentUser
-        //referencia de foto del usuario
-        val imageRef = FirebaseStorage.getInstance().reference.child("${user?.uid}/profile_picture")
-        //obtener la uri de la foto
-        val baos = ByteArrayOutputStream()
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        var downloadUrl =
-            imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
-        //setear la foto al profile
-        val profileUpdates = UserProfileChangeRequest.Builder()
-            .setDisplayName(FirebaseAuth.getInstance().currentUser?.displayName)
-            .setPhotoUri(Uri.parse(downloadUrl))
-            .build()
-        user?.updateProfile(profileUpdates)?.await()
-    }
 }
