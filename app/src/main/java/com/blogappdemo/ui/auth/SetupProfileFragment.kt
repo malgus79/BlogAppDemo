@@ -36,7 +36,7 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSetupProfileBinding.bind(view)
 
-        val btnProfileImage = binding.profileImage
+        val btnProfileImage = binding.ivProfileImage
         btnProfileImage.setOnClickListener {
             dispatchTakePictureIntent()
         }
@@ -49,14 +49,14 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = it.data
                 val imageBitmap = data?.extras?.get("data") as Bitmap
-                binding.profileImage.setImageBitmap(imageBitmap)
+                binding.ivProfileImage.setImageBitmap(imageBitmap)
                 bitmap = imageBitmap
             }
         }
 
         //crear profile
         binding.btnCreateProfile.setOnClickListener {
-            val username = binding.etxtUsername.text.toString().trim()
+            val username = binding.etUsername.text.toString().trim()
             val alertDialog = AlertDialog.Builder(requireContext()).setTitle("Uploading photo...").create()
             bitmap?.let {
                 if(username.isNotEmpty()) {

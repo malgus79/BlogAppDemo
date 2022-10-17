@@ -46,8 +46,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         val user = FirebaseAuth.getInstance().currentUser
         Glide.with(this).load(user?.photoUrl).centerCrop().into(binding.imgProfile)
         binding.imgProfile
-        binding.txtProfileName.text = user?.displayName
-        binding.txtProfileEmail.text = user?.email
+        binding.tvProfileName.text = user?.displayName
+        binding.tvProfileEmail.text = user?.email
         Log.d("Usuario:", "fotourl: ${user?.photoUrl} , nombre: ${user?.displayName} ")
 
         //solucion al onActivityResult @deprecated
@@ -73,7 +73,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
         //actualizar nueva imagen en firebase
         binding.btnEditConfirm.setOnClickListener {
-            val username = binding.txtProfileName.text.toString().trim()
+            val username = binding.tvProfileName.text.toString().trim()
             val alertDialog =
                 AlertDialog.Builder(requireContext()).setTitle("Uploading changes...").create()
             bitmap?.let {

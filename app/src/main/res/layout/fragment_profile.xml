@@ -48,7 +48,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/txt_profile_name"
+        android:id="@+id/tv_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_default"
@@ -56,7 +56,7 @@
         android:textSize="@dimen/size_max"
         android:textStyle="bold"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/txt_profile_name"
+        app:layout_constraintBottom_toTopOf="@id/tv_profile_email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/linear_img_profile"
@@ -64,7 +64,7 @@
 
 
     <TextView
-        android:id="@+id/txt_profile_email"
+        android:id="@+id/tv_profile_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_min"
@@ -72,11 +72,11 @@
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_profile_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_name"
         tools:text="elchicho@gmail.com" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogout"
+        android:id="@+id/btn_logout"
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_profile_email" />
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_email" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_edit_confirm"
@@ -101,6 +101,6 @@
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_profile_email" />
+        app:layout_constraintTop_toBottomOf="@id/tv_profile_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,7 +64,7 @@ class HomeScreenAdapter(
         private fun setupProfileInfo(post: Post) {
             Glide.with(context).load(post.poster?.profile_picture).centerCrop()
                 .into(binding.profilePicture)
-            binding.profileName.text = post.poster?.username
+            binding.tvProfileName.text = post.poster?.username
         }
 
         //timestamp
@@ -72,47 +72,47 @@ class HomeScreenAdapter(
             val createdAt = (post.created_at?.time?.div(1000L))?.let {
                 TimeUtils.getTimeAgo(it.toInt())
             }
-            binding.postTimestamp.text = createdAt
+            binding.tvPostTimestamp.text = createdAt
         }
 
         //imagen del post
         private fun setupPostImage(post: Post) {
-            Glide.with(context).load(post.post_image).centerCrop().into(binding.postImage)
+            Glide.with(context).load(post.post_image).centerCrop().into(binding.ivPostImage)
         }
 
         //postDescription
         private fun setupPostDescription(post: Post) {
             if (post.post_description.isEmpty()) {
-                binding.postDescription.isVisible = false
+                binding.tvPostDescription.isVisible = false
             } else {
-                binding.postDescription.text = post.post_description
+                binding.tvPostDescription.text = post.post_description
             }
         }
 
         //pintar el like (favourite)
         private fun tintHeartIcon(post: Post) {
             if (!post.liked) {
-                binding.likeBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_border))
-                binding.likeBtn.setColorFilter(ContextCompat.getColor(context, R.color.black))
+                binding.ivLikeBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_border))
+                binding.ivLikeBtn.setColorFilter(ContextCompat.getColor(context, R.color.black))
             } else {
-                binding.likeBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
-                binding.likeBtn.setColorFilter(ContextCompat.getColor(context, R.color.red_like))
+                binding.ivLikeBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
+                binding.ivLikeBtn.setColorFilter(ContextCompat.getColor(context, R.color.red_like))
             }
         }
 
         //contador de likes
         private fun setupLikeCount(post: Post) {
             if (post.likes > 0) {
-                binding.likeCount.show()
-                binding.likeCount.text = "${post.likes} likes"
+                binding.tvLikeCount.show()
+                binding.tvLikeCount.text = "${post.likes} likes"
             } else {
-                binding.likeCount.hide()
+                binding.tvLikeCount.hide()
             }
         }
 
         //accion al click del like
         private fun setLikeClickAction(post: Post) {
-            binding.likeBtn.setOnClickListener {
+            binding.ivLikeBtn.setOnClickListener {
                 if(post.liked) post.apply { liked = false } else post.apply { liked = true }
                 //pintar color segun estado
                 tintHeartIcon(post)

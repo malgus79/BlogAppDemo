@@ -49,8 +49,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun doLogin() {
         binding.btnSignin.setOnClickListener {
             it.hideKeyboard()
-            val email = binding.editTextEmail.text.toString().trim()
-            val password = binding.editTextPassword.text.toString().trim()
+            val email = binding.tietEmail.text.toString().trim()
+            val password = binding.tietPassword.text.toString().trim()
             validateCredentials(email, password)
             signIn(email, password)
         }
@@ -58,7 +58,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     //navegar al fragment de registro
     private fun goToSignUpPage() {
-        binding.txtSignup.setOnClickListener {
+        binding.tvSignup.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
         }
     }
@@ -66,11 +66,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     //validacion de email y pass
     private fun validateCredentials(email: String, password: String) {
         if (email.isEmpty()) {
-            binding.editTextEmail.error = "E-mail is empty"
+            binding.tietEmail.error = "E-mail is empty"
             return
         }
         if (password.isEmpty()) {
-            binding.editTextPassword.error = "Password is empty"
+            binding.tietPassword.error = "Password is empty"
             return
         }
     }

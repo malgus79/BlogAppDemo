@@ -38,7 +38,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val imageBitmap = it.data?.extras?.get("data") as Bitmap
-                binding.postImage.setImageBitmap(imageBitmap)
+                binding.ivPostImage.setImageBitmap(imageBitmap)
                 bitmap = imageBitmap
             }
         }
@@ -47,7 +47,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 photoSelectedUri = it.data?.data
-                binding.postImage.setImageURI(photoSelectedUri)
+                binding.ivPostImage.setImageURI(photoSelectedUri)
             }
         }
 
@@ -63,13 +63,13 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         binding.btnOpenGallery.setOnClickListener { openGallery() }
 
 
-        binding.btnUploadPhoto.setOnClickListener {
+        binding.cvUploadPhoto.setOnClickListener {
             binding.ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
             binding.tvUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
 
             //subir foto desde camara
             bitmap?.let {
-                viewModel.uploadPhotoCamera(it, binding.etxtDescription.text.toString().trim())
+                viewModel.uploadPhotoCamera(it, binding.etDescription.text.toString().trim())
                     .observe(viewLifecycleOwner, Observer { result ->
                         when (result) {
                             is Result.Loading -> {
@@ -80,7 +80,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                             is Result.Success -> {
                                 //findNavController().navigate(R.id.action_cameraFragment_to_homeScreenFragment)
                                 findNavController().popBackStack()
-                                binding.etxtDescription.setText("")
+                                binding.etDescription.setText("")
                             }
                             is Result.Failure -> {
                                 Toast.makeText(requireContext(),
@@ -93,7 +93,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
             //subir foto desde galeria
             photoSelectedUri?.let {
-                viewModel.uploadPhotoGallery(it, binding.etxtDescription.text.toString().trim())
+                viewModel.uploadPhotoGallery(it, binding.etDescription.text.toString().trim())
                     .observe(viewLifecycleOwner, Observer { result ->
                         when (result) {
                             is Result.Loading -> {
@@ -104,7 +104,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                             is Result.Success -> {
                                 //findNavController().navigate(R.id.action_cameraFragment_to_homeScreenFragment)
                                 findNavController().popBackStack()
-                                binding.etxtDescription.setText("")
+                                binding.etDescription.setText("")
                             }
                             is Result.Failure -> {
                                 Toast.makeText(requireContext(),
@@ -150,7 +150,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     //setear vacio el campo descripcion al salir del fragment
     override fun onPause() {
-        binding.etxtDescription.setText("")
+        binding.etDescription.setText("")
         super.onPause()
     }
 
