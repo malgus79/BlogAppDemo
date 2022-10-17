@@ -14,5 +14,6 @@
     <dimen name="size_min">10sp</dimen>
     <dimen name="size_default">15sp</dimen>
     <dimen name="size_middle">20sp</dimen>
+    <dimen name="size_max">30sp</dimen>
 
 </resources>

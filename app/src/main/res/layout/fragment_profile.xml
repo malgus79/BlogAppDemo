@@ -6,42 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".ui.profile.ProfileFragment">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/img_profile"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_margin="@dimen/margin_default"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/txt_profile_nickname"
-        app:layout_constraintDimensionRatio="H, 4:3"
-        tools:src="@mipmap/ic_launcher"/>
-
-    <TextView
-        android:id="@+id/txt_profile_nickname"
+    <LinearLayout
+        android:id="@+id/linear_img_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/size_middle"
-        android:fontFamily="monospace"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/img_profile"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/txt_profile_name"
-        tools:text="El Chicho" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_profile"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_margin="@dimen/margin_default"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="H, 4:3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@mipmap/ic_launcher" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_image"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
+                android:layout_marginEnd="@dimen/margin_min"
+                android:layout_marginBottom="@dimen/margin_min"
+                android:backgroundTint="@color/grey"
+                android:scaleX=".8"
+                android:scaleY=".8"
+                app:cornerRadius="40dp"
+                app:icon="@drawable/ic_edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/img_profile" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="232dp" />
 
     <TextView
         android:id="@+id/txt_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_middle"
-        android:textSize="@dimen/size_default"
-        app:layout_constraintTop_toBottomOf="@id/txt_profile_nickname"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_default"
+        android:fontFamily="monospace"
+        android:textSize="@dimen/size_max"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/txt_profile_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/txt_profile_email"
-        tools:text="Juan Perez" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_img_profile"
+        tools:text="El Chicho" />
+
+    <Button
+        android:id="@+id/btn_edit_name"
+        android:layout_width="60dp"
+        android:layout_height="70dp"
+        android:backgroundTint="@color/grey"
+        android:scaleX=".8"
+        android:scaleY=".8"
+        app:cornerRadius="40dp"
+        app:icon="@drawable/ic_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/txt_profile_name"
+        app:layout_constraintTop_toTopOf="@id/guideline" />
 
     <TextView
         android:id="@+id/txt_profile_email"
@@ -49,22 +88,37 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_min"
         android:textSize="@dimen/size_default"
-        app:layout_constraintTop_toBottomOf="@id/txt_profile_name"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_profile_name"
         tools:text="elchicho@gmail.com" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogout"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_default"
         android:text="@string/profile_button_logout"
         app:icon="@drawable/ic_exit_to_app"
-        android:padding="@dimen/padding_default"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_profile_email"
         app:layout_constraintBottom_toBottomOf="parent"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_profile_email" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_edit_confirm"
+        style="@style/Widget.MaterialComponents.Button.TextButton.Dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_default"
+        android:padding="@dimen/padding_default"
+        android:text="@string/profile_edit_confirm"
+        app:icon="@drawable/ic_edit"
+        android:backgroundTint="@color/yellow"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_profile_email" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
