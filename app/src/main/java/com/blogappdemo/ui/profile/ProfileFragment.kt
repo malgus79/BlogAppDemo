@@ -42,6 +42,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProfileBinding.bind(view)
 
+        //carga de datos en fragment
         val user = FirebaseAuth.getInstance().currentUser
         Glide.with(this).load(user?.photoUrl).centerCrop().into(binding.imgProfile)
         binding.imgProfile
@@ -70,7 +71,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             binding.btnEditConfirm.show()
         }
 
-
+        //actualizar nueva imagen en firebase
         binding.btnEditConfirm.setOnClickListener {
             val username = binding.txtProfileName.text.toString().trim()
             val alertDialog =
@@ -97,8 +98,14 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             binding.btnEditImage.setIconTintResource(R.color.white)
             binding.btnEditConfirm.hide()
         }
+
+        //logOut
+        binding.btnLogout.setOnClickListener {
+            signOut()
+        }
     }
 
+    //abrir camara
     private fun editImageProfile() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
@@ -106,5 +113,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),"No se encontro app para abir la camara", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    //logOut
+    private fun signOut() {
+        FirebaseAuth.getInstance().signOut()
+        activity?.finish()
     }
 }
