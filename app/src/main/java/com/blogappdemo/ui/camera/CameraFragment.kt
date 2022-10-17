@@ -143,5 +143,11 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         galleryResult.launch(intent)
     }
 
+    //setear vacio el campo descripcion al salir del fragment
+    override fun onPause() {
+        binding.etxtDescription.setText("")
+        super.onPause()
+    }
+
 
 }
