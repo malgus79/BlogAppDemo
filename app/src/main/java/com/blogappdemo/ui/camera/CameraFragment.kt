@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -61,8 +62,12 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         binding.btnTakePhoto.setOnClickListener { takePhoto() }
         binding.btnOpenGallery.setOnClickListener { openGallery() }
 
-        //subir foto desde camara
+
         binding.btnUploadPhoto.setOnClickListener {
+            binding.ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
+            binding.tvUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
+
+            //subir foto desde camara
             bitmap?.let {
                 viewModel.uploadPhotoCamera(it, binding.etxtDescription.text.toString().trim())
                     .observe(viewLifecycleOwner, Observer { result ->
