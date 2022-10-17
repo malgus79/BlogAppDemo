@@ -45,7 +45,7 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         resultLauncher = registerForActivityResult(
             ActivityResultContracts
                 .StartActivityForResult()
-        ){
+        ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = it.data
                 val imageBitmap = data?.extras?.get("data") as Bitmap
@@ -57,23 +57,25 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         //crear profile
         binding.btnCreateProfile.setOnClickListener {
             val username = binding.etUsername.text.toString().trim()
-            val alertDialog = AlertDialog.Builder(requireContext()).setTitle("Uploading photo...").create()
+            val alertDialog =
+                AlertDialog.Builder(requireContext()).setTitle("Uploading photo...").create()
             bitmap?.let {
-                if(username.isNotEmpty()) {
-                    viewModel.updateUserProfile(imageBitmap = it, username = username).observe(viewLifecycleOwner) { result ->
-                        when (result) {
-                            is Result.Loading -> {
-                                alertDialog.show()
-                            }
-                            is Result.Success -> {
-                                alertDialog.dismiss()
-                                findNavController().navigate(R.id.action_setupProfileFragment_to_homeScreenFragment)
-                            }
-                            is Result.Failure -> {
-                                alertDialog.dismiss()
+                if (username.isNotEmpty()) {
+                    viewModel.updateUserProfile(imageBitmap = it, username = username)
+                        .observe(viewLifecycleOwner) { result ->
+                            when (result) {
+                                is Result.Loading -> {
+                                    alertDialog.show()
+                                }
+                                is Result.Success -> {
+                                    alertDialog.dismiss()
+                                    findNavController().navigate(R.id.action_setupProfileFragment_to_homeScreenFragment)
+                                }
+                                is Result.Failure -> {
+                                    alertDialog.dismiss()
+                                }
                             }
                         }
-                    }
                 }
             }
         }
@@ -85,7 +87,9 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         try {
             resultLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(requireContext(), "No se encontro app para abir la camara", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                "No se encontro app para abir la camara",
+                Toast.LENGTH_SHORT).show()
         }
     }
 }

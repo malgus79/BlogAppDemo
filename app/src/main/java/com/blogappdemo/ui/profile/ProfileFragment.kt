@@ -66,7 +66,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         //editar imagen de perfil
         binding.btnEditImage.setOnClickListener {
             editImageProfile()
-            binding.btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.yellow))
+            binding.btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(),
+                R.color.yellow))
             binding.btnEditImage.setIconTintResource(R.color.purple_700)
             binding.btnEditConfirm.show()
         }
@@ -78,23 +79,25 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 AlertDialog.Builder(requireContext()).setTitle("Uploading changes...").create()
             bitmap?.let {
                 if (username.isNotEmpty()) {
-                    viewModel.updateUserProfile(imageBitmap = it, username = username).observe(viewLifecycleOwner) { result ->
-                        when (result) {
-                            is Result.Loading -> {
-                                alertDialog.show()
-                            }
-                            is Result.Success -> {
-                                alertDialog.dismiss()
+                    viewModel.updateUserProfile(imageBitmap = it, username = username)
+                        .observe(viewLifecycleOwner) { result ->
+                            when (result) {
+                                is Result.Loading -> {
+                                    alertDialog.show()
+                                }
+                                is Result.Success -> {
+                                    alertDialog.dismiss()
 
-                            }
-                            is Result.Failure -> {
-                                alertDialog.dismiss()
+                                }
+                                is Result.Failure -> {
+                                    alertDialog.dismiss()
+                                }
                             }
                         }
-                    }
                 }
             }
-            binding.btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey))
+            binding.btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(),
+                R.color.grey))
             binding.btnEditImage.setIconTintResource(R.color.white)
             binding.btnEditConfirm.hide()
         }
@@ -111,7 +114,9 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         try {
             resultLauncher.launch(intent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(requireContext(),"No se encontro app para abir la camara", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),
+                "No se encontro app para abir la camara",
+                Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -1,7 +1,6 @@
 package com.blogappdemo.presentation.auth
 
 import android.graphics.Bitmap
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData

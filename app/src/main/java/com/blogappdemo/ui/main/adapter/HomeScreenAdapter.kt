@@ -2,7 +2,6 @@ package com.blogappdemo.ui.main.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -24,6 +23,7 @@ class HomeScreenAdapter(
 
     //estado de likes
     private var postClickListener: OnPostClickListener? = null
+
     init {
         postClickListener = onPostClickListener
     }
@@ -92,19 +92,27 @@ class HomeScreenAdapter(
         //pintar el like (favourite)
         private fun tintHeartIcon(post: Post) {
             if (!post.liked) {
-                binding.ivLikeBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite_border))
-                binding.ivLikeBtn.setColorFilter(ContextCompat.getColor(context, R.color.black))
+                with(binding) {
+                    ivLikeBtn.setImageDrawable(ContextCompat.getDrawable(context,
+                        R.drawable.ic_favorite_border))
+                    ivLikeBtn.setColorFilter(ContextCompat.getColor(context, R.color.black))
+                }
             } else {
-                binding.ivLikeBtn.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_favorite))
-                binding.ivLikeBtn.setColorFilter(ContextCompat.getColor(context, R.color.red_like))
+                with(binding) {
+                    ivLikeBtn.setImageDrawable(ContextCompat.getDrawable(context,
+                        R.drawable.ic_favorite))
+                    ivLikeBtn.setColorFilter(ContextCompat.getColor(context, R.color.red_like))
+                }
             }
         }
 
         //contador de likes
         private fun setupLikeCount(post: Post) {
             if (post.likes > 0) {
-                binding.tvLikeCount.show()
-                binding.tvLikeCount.text = "${post.likes} likes"
+                with(binding) {
+                    tvLikeCount.show()
+                    tvLikeCount.text = "${post.likes} likes"
+                }
             } else {
                 binding.tvLikeCount.hide()
             }
@@ -113,7 +121,7 @@ class HomeScreenAdapter(
         //accion al click del like
         private fun setLikeClickAction(post: Post) {
             binding.ivLikeBtn.setOnClickListener {
-                if(post.liked) post.apply { liked = false } else post.apply { liked = true }
+                if (post.liked) post.apply { liked = false } else post.apply { liked = true }
                 //pintar color segun estado
                 tintHeartIcon(post)
                 //enviar al fragment si fue linkeado y su estado en ese momento

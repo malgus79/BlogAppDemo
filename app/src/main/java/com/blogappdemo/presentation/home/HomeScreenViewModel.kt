@@ -57,6 +57,7 @@ class HomeScreenViewModel(private val repo: HomeScreenRepo) : ViewModel() {
             }
         }
     }
+
     fun getPosts(): StateFlow<Result<List<Post>>> = posts
 
 

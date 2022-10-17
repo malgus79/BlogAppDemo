@@ -37,9 +37,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     //chequear si el usuario esta logeado y dirigirlo al home o al registro
     private fun isUserLoggedIn() {
         firebaseAuth.currentUser?.let { user ->
-            if(user.displayName.isNullOrEmpty()) {
+            if (user.displayName.isNullOrEmpty()) {
                 findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
-            }else{
+            } else {
                 findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
             }
         }
@@ -80,8 +80,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         viewModel.signIn(email, password).observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.progressBar.show()
-                    binding.btnSignin.disable()
+                    with(binding) {
+                        progressBar.show()
+                        btnSignin.disable()
+                    }
                 }
                 is Result.Success -> {
                     binding.progressBar.hide()
@@ -90,15 +92,17 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         "Welcome ${result.data?.email}",
                         Toast.LENGTH_SHORT
                     ).show()
-                    if(result.data?.displayName.isNullOrEmpty()) {
+                    if (result.data?.displayName.isNullOrEmpty()) {
                         findNavController().navigate(R.id.action_loginFragment_to_setupProfileFragment)
-                    }else{
+                    } else {
                         findNavController().navigate(R.id.action_loginFragment_to_homeScreenFragment)
                     }
                 }
                 is Result.Failure -> {
-                    binding.progressBar.hide()
-                    binding.btnSignin.enable()
+                    with(binding) {
+                        progressBar.hide()
+                        btnSignin.enable()
+                    }
                     Toast.makeText(
                         requireContext(),
                         "Error: ${result.exception}",

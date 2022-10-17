@@ -15,7 +15,7 @@ object TimeUtils {
 
         //obtener el tiempo actual del telefono
         val now = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis())
-        if(time > now || time <= 0){
+        if (time > now || time <= 0) {
             return "in the future"
         }
 

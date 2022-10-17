@@ -39,7 +39,7 @@ class HomeScreenDataSource {
 
                         //poner al post el valor (true/false) si esta o no likeado
                         id = post.id
-                        if(isLiked != null) {
+                        if (isLiked != null) {
                             liked = isLiked
                         }
                     }
@@ -52,8 +52,9 @@ class HomeScreenDataSource {
 
     //verificar si el array contiene el usuario (si esta likeado el post)
     private suspend fun isPostLiked(postId: String, uid: String): Boolean {
-        val post = FirebaseFirestore.getInstance().collection("postsLikes").document(postId).get().await()
-        if(!post.exists()) return false
+        val post =
+            FirebaseFirestore.getInstance().collection("postsLikes").document(postId).get().await()
+        if (!post.exists()) return false
         val likeArray: List<String> = post.get("likes") as List<String>
         return likeArray.contains(uid)
     }
@@ -66,7 +67,8 @@ class HomeScreenDataSource {
         //obtener datos de firebase, del post que se está linkeando
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         val postRef = FirebaseFirestore.getInstance().collection("posts").document(postId)
-        val postsLikesRef = FirebaseFirestore.getInstance().collection("postsLikes").document(postId)
+        val postsLikesRef =
+            FirebaseFirestore.getInstance().collection("postsLikes").document(postId)
 
         //instamcia de la base de datos
         val database = FirebaseFirestore.getInstance()

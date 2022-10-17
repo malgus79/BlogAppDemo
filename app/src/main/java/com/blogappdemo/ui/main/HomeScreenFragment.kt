@@ -46,6 +46,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
+                //obtener data de <post>
                 viewModel.latestPosts.collectLatest { result ->
                     when (result) {
                         is Result.Loading -> {
@@ -60,7 +61,8 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                             } else {
                                 binding.emptyContainer.hide()
                             }
-                            binding.rvHome.adapter = HomeScreenAdapter(result.data, this@HomeScreenFragment)
+                            binding.rvHome.adapter =
+                                HomeScreenAdapter(result.data, this@HomeScreenFragment)
                         }
 
                         is Result.Failure -> {
@@ -75,33 +77,35 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                 }
             }
         }
+/*
+        //obtener data de <post>
+        viewModel.fetchLatestPosts().observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                is Result.Loading -> {
+                    binding.progressBar.show()
+                }
+                is Result.Success -> {
+                    binding.progressBar.hide()
+                    if (result.data.isEmpty()) {
+                        binding.emptyContainer.show()
+                        return@Observer
+                    } else {
+                        binding.emptyContainer.hide()
+                    }
+                    binding.rvHome.adapter = HomeScreenAdapter(result.data, this)
+                }
+                is Result.Failure -> {
+                    binding.progressBar.hide()
+                    Toast.makeText(
+                        requireContext(),
+                        "Ocurrio un error: ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        })
 
-//        //obtener data de <post>
-//        viewModel.fetchLatestPosts().observe(viewLifecycleOwner, Observer { result ->
-//            when (result) {
-//                is Result.Loading -> {
-//                    binding.progressBar.show()
-//                }
-//                is Result.Success -> {
-//                    binding.progressBar.hide()
-//                    if (result.data.isEmpty()) {
-//                        binding.emptyContainer.show()
-//                        return@Observer
-//                    } else {
-//                        binding.emptyContainer.hide()
-//                    }
-//                    binding.rvHome.adapter = HomeScreenAdapter(result.data, this)
-//                }
-//                is Result.Failure -> {
-//                    binding.progressBar.hide()
-//                    Toast.makeText(
-//                        requireContext(),
-//                        "Ocurrio un error: ${result.exception}",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                }
-//            }
-//        })
+ */
     }
 
     //al hacer click en likes

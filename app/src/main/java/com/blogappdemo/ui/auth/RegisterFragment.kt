@@ -57,16 +57,20 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         viewModel.signUp(email, password, username).observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Loading -> {
-                    binding.progressBar.show()
-                    binding.btnSignup.disable()
+                    with(binding) {
+                        progressBar.show()
+                        btnSignup.disable()
+                    }
                 }
                 is Result.Success -> {
                     binding.progressBar.hide()
                     findNavController().navigate(R.id.action_registerFragment_to_setupProfileFragment)
                 }
                 is Result.Failure -> {
-                    binding.progressBar.hide()
-                    binding.btnSignup.enable()
+                    with(binding) {
+                        progressBar.hide()
+                        btnSignup.enable()
+                    }
                 }
             }
         })
@@ -80,8 +84,10 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         email: String,
     ): Boolean {
         if (password != confirmPassword) {
-            binding.tietConfirmPassword.error = "Password does not match"
-            binding.tietPassword.error = "Password does not match"
+            with(binding) {
+                tietConfirmPassword.error = "Password does not match"
+                tietPassword.error = "Password does not match"
+            }
             return true
         }
 

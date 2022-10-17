@@ -52,20 +52,25 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCameraBinding.bind(view)
 
         openCamera()
 
-        binding.btnTakePhoto.setOnClickListener { takePhoto() }
-        binding.btnOpenGallery.setOnClickListener { openGallery() }
+        with(binding) {
+            btnTakePhoto.setOnClickListener { takePhoto() }
+            btnOpenGallery.setOnClickListener { openGallery() }
+        }
 
 
         binding.cvUploadPhoto.setOnClickListener {
-            binding.ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
-            binding.tvUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
+            with(binding) {
+                ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(),
+                    R.color.teal_700))
+                tvUpload.setBackgroundColor(ContextCompat.getColor(requireContext(),
+                    R.color.teal_700))
+            }
 
             //subir foto desde camara
             bitmap?.let {

@@ -16,10 +16,12 @@ class CameraDataSource {
     suspend fun uploadPhotoCamera(imageBitmap: Bitmap, description: String) {
         val user = FirebaseAuth.getInstance().currentUser
         val randomName = UUID.randomUUID().toString()
-        val imageRef = FirebaseStorage.getInstance().reference.child("${user?.uid}/posts/$randomName")
+        val imageRef =
+            FirebaseStorage.getInstance().reference.child("${user?.uid}/posts/$randomName")
         val baos = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val downloadUrl = imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
+        val downloadUrl =
+            imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
 
         user?.let {
             it.displayName?.let { displayName ->
@@ -37,7 +39,8 @@ class CameraDataSource {
     suspend fun uploadPhotoGallery(imageUri: Uri, description: String) {
         val user = FirebaseAuth.getInstance().currentUser
         val randomName = UUID.randomUUID().toString()
-        val imageRef = FirebaseStorage.getInstance().reference.child("${user?.uid}/posts/$randomName")
+        val imageRef =
+            FirebaseStorage.getInstance().reference.child("${user?.uid}/posts/$randomName")
         imageUri.toString()
         val downloadUrl = imageRef.putFile(imageUri).await().storage.downloadUrl.await().toString()
 
