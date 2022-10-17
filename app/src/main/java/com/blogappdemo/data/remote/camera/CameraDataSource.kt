@@ -1,6 +1,7 @@
 package com.blogappdemo.data.remote.camera
 
 import android.graphics.Bitmap
+import android.net.Uri
 import com.blogappdemo.data.model.Post
 import com.blogappdemo.data.model.Poster
 import com.google.firebase.auth.FirebaseAuth
@@ -12,7 +13,7 @@ import java.util.*
 
 class CameraDataSource {
 
-    suspend fun uploadPhoto(imageBitmap: Bitmap, description: String) {
+    suspend fun uploadPhotoCamera(imageBitmap: Bitmap, description: String) {
         val user = FirebaseAuth.getInstance().currentUser
         val randomName = UUID.randomUUID().toString()
         val imageRef = FirebaseStorage.getInstance().reference.child("${user?.uid}/posts/$randomName")
@@ -23,7 +24,29 @@ class CameraDataSource {
         user?.let {
             it.displayName?.let { displayName ->
                 FirebaseFirestore.getInstance().collection("posts").add(Post(
-                    poster = Poster(username = displayName, uid = user.uid, profile_picture = it.photoUrl.toString()),
+                    poster = Poster(username = displayName,
+                        uid = user.uid,
+                        profile_picture = it.photoUrl.toString()),
+                    post_image = downloadUrl,
+                    post_description = description,
+                    likes = 0))
+            }
+        }
+    }
+
+    suspend fun uploadPhotoGallery(imageUri: Uri, description: String) {
+        val user = FirebaseAuth.getInstance().currentUser
+        val randomName = UUID.randomUUID().toString()
+        val imageRef = FirebaseStorage.getInstance().reference.child("${user?.uid}/posts/$randomName")
+        imageUri.toString()
+        val downloadUrl = imageRef.putFile(imageUri).await().storage.downloadUrl.await().toString()
+
+        user?.let {
+            it.displayName?.let { displayName ->
+                FirebaseFirestore.getInstance().collection("posts").add(Post(
+                    poster = Poster(username = displayName,
+                        uid = user.uid,
+                        profile_picture = it.photoUrl.toString()),
                     post_image = downloadUrl,
                     post_description = description,
                     likes = 0))
