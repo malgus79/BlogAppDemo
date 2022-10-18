@@ -45,9 +45,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         //carga de datos en fragment
         val user = FirebaseAuth.getInstance().currentUser
         Glide.with(this).load(user?.photoUrl).centerCrop().into(binding.imgProfile)
-        binding.imgProfile
-        binding.tvProfileName.text = user?.displayName
-        binding.tvProfileEmail.text = user?.email
+        with(binding) {
+            imgProfile
+            tvProfileName.text = user?.displayName
+            tvProfileEmail.text = user?.email
+        }
         Log.d("Usuario:", "fotourl: ${user?.photoUrl} , nombre: ${user?.displayName} ")
 
         //solucion al onActivityResult @deprecated
@@ -66,10 +68,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         //editar imagen de perfil
         binding.btnEditImage.setOnClickListener {
             editImageProfile()
-            binding.btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(),
-                R.color.yellow))
-            binding.btnEditImage.setIconTintResource(R.color.purple_700)
-            binding.btnEditConfirm.show()
+            with(binding) {
+                btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.yellow))
+                btnEditImage.setIconTintResource(R.color.purple_700)
+                btnEditConfirm.show()
+            }
         }
 
         //actualizar nueva imagen en firebase
@@ -96,10 +99,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                         }
                 }
             }
-            binding.btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(),
-                R.color.grey))
-            binding.btnEditImage.setIconTintResource(R.color.white)
-            binding.btnEditConfirm.hide()
+            with(binding) {
+                btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.grey))
+                btnEditImage.setIconTintResource(R.color.white)
+                btnEditConfirm.hide()
+            }
         }
 
         //logOut

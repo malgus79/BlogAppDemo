@@ -66,10 +66,8 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
         binding.cvUploadPhoto.setOnClickListener {
             with(binding) {
-                ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(),
-                    R.color.teal_700))
-                tvUpload.setBackgroundColor(ContextCompat.getColor(requireContext(),
-                    R.color.teal_700))
+                ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
+                tvUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
             }
 
             //subir foto desde camara
