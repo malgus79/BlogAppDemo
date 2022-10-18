@@ -1,10 +1,10 @@
 package com.blogappdemo.ui.main.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.blogappdemo.R
 import com.blogappdemo.core.BaseViewHolder
@@ -83,25 +83,26 @@ class HomeScreenAdapter(
         //postDescription
         private fun setupPostDescription(post: Post) {
             if (post.post_description.isEmpty()) {
-                binding.tvPostDescription.isVisible = false
+                binding.tvPostDescription.hide()
             } else {
                 binding.tvPostDescription.text = post.post_description
             }
         }
 
         //pintar el like (favourite)
+        @SuppressLint("ResourceAsColor")
         private fun tintHeartIcon(post: Post) {
             if (!post.liked) {
                 with(binding) {
-                    ivLikeBtn.setImageDrawable(ContextCompat.getDrawable(context,
-                        R.drawable.ic_favorite_border))
-                    ivLikeBtn.setColorFilter(ContextCompat.getColor(context, R.color.black))
+                    btnLike.setIconTintResource(R.color.grey)
+                    btnLike.setIconResource(R.drawable.ic_thumb_up_off_alt)
+                    btnLike.setTextColor(ContextCompat.getColor(context, R.color.grey))
                 }
             } else {
                 with(binding) {
-                    ivLikeBtn.setImageDrawable(ContextCompat.getDrawable(context,
-                        R.drawable.ic_favorite))
-                    ivLikeBtn.setColorFilter(ContextCompat.getColor(context, R.color.red_like))
+                    btnLike.setIconTintResource(R.color.blue_light)
+                    btnLike.setIconResource(R.drawable.ic_thumb_up)
+                    btnLike.setTextColor(ContextCompat.getColor(context, R.color.blue_light))
                 }
             }
         }
@@ -120,7 +121,7 @@ class HomeScreenAdapter(
 
         //accion al click del like
         private fun setLikeClickAction(post: Post) {
-            binding.ivLikeBtn.setOnClickListener {
+            binding.btnLike.setOnClickListener {
                 if (post.liked) post.apply { liked = false } else post.apply { liked = true }
                 //pintar color segun estado
                 tintHeartIcon(post)
