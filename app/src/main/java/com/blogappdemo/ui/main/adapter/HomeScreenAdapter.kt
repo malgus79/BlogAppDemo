@@ -59,6 +59,7 @@ class HomeScreenAdapter(
             tintHeartIcon(item)
             setupLikeCount(item)
             setLikeClickAction(item)
+            setupShareCount(item)
             setShareClickAction(item)
         }
 
@@ -131,10 +132,25 @@ class HomeScreenAdapter(
             }
         }
 
-        //opcion de compartir imagen
+        //contador de share
+        private fun setupShareCount(post: Post) {
+            if (post.shares > 0) {
+                with(binding) {
+                    tvShareCount.show()
+                    tvShareCount.text = "${post.shares} shared"
+                }
+            } else {
+                binding.tvShareCount.hide()
+            }
+        }
+
+        //al hacer click en compartir
         private fun setShareClickAction(post: Post) {
             binding.btnShare.setOnClickListener {
+                if (post.shared) post.apply { shared = false } else post.apply { shared = true }
                 sharePost(post)
+                //enviar al fragment si fue compartido y su estado en ese momento
+                postClickListener?.onShareButtonClick(post, post.shared)
             }
         }
 
@@ -149,8 +165,4 @@ class HomeScreenAdapter(
             startActivity(context, shareIntent, null)
         }
     }
-
-
-
-
 }

@@ -57,14 +57,26 @@ class HomeScreenViewModel(private val repo: HomeScreenRepo) : ViewModel() {
             }
         }
     }
-
     fun getPosts(): StateFlow<Result<List<Post>>> = posts
 
 
+    //Estado de Likes
     fun registerLikeButtonState(postId: String, liked: Boolean) = liveData(Dispatchers.IO) {
         emit(Result.Loading())
         kotlin.runCatching {
             repo.registerLikeButtonState(postId, liked)
+        }.onSuccess {
+            emit(Result.Success(Unit))
+        }.onFailure { throwable ->
+            emit(Result.Failure(Exception(throwable.message)))
+        }
+    }
+
+    //Estado de Shares
+    fun registerShareButtonState(postId: String, shared: Boolean) = liveData(Dispatchers.IO) {
+        emit(Result.Loading())
+        kotlin.runCatching {
+            repo.registerShareButtonState(postId, shared)
         }.onSuccess {
             emit(Result.Success(Unit))
         }.onFailure { throwable ->

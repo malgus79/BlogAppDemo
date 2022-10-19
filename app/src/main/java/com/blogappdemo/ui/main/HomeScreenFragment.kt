@@ -108,7 +108,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
  */
     }
 
-    //al hacer click en likes
+    //al hacer click en like
     override fun onLikeButtonClick(post: Post, liked: Boolean) {
         viewModel.registerLikeButtonState(post.id, liked).observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -118,6 +118,29 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
 
                 is Result.Success -> {
                     Log.d("Like Transaction", "Success")
+                }
+
+                is Result.Failure -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Ocurrio un error: ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    //al hacer click en share
+    override fun onShareButtonClick(post: Post, shared: Boolean) {
+        viewModel.registerShareButtonState(post.id, shared).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    Log.d("Share Transaction", "in progress...")
+                }
+
+                is Result.Success -> {
+                    Log.d("Share Transaction", "Success")
                 }
 
                 is Result.Failure -> {

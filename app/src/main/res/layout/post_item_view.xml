@@ -55,17 +55,17 @@
     <ImageView
         android:id="@+id/iv_post_image"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="350dp"
         android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="H, 4:3"
         app:layout_constraintTop_toBottomOf="@id/tv_post_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/linear_count"
+        app:layout_constraintBottom_toTopOf="@id/constrains_layout_count"
         tools:background="@mipmap/ic_launcher_round" />
 
-    <LinearLayout
-        android:id="@+id/linear_count"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrains_layout_count"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -76,11 +76,14 @@
         app:layout_constraintBottom_toTopOf="@id/divider_line">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cv_like_icon_notification"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/margin_min"
             android:backgroundTint="@color/blue_light"
-            app:cardCornerRadius="10dp">
+            app:cardCornerRadius="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/constrains_layout_count">
 
             <ImageView
                 android:id="@+id/iv_like_icon_notification"
@@ -93,11 +96,14 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cv_fav_icon_notification"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="@dimen/margin_min"
             android:backgroundTint="@color/red_light"
-            app:cardCornerRadius="10dp">
+            app:cardCornerRadius="10dp"
+            app:layout_constraintStart_toEndOf="@id/cv_like_icon_notification"
+            app:layout_constraintTop_toTopOf="@id/constrains_layout_count">
 
             <ImageView
                 android:id="@+id/iv_fav_icon_notification"
@@ -114,12 +120,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            tools:text="5 likes" />
+            tools:text="5 likes"
+            app:layout_constraintTop_toTopOf="@id/constrains_layout_count"
+            app:layout_constraintStart_toEndOf="@id/cv_fav_icon_notification"/>
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/tv_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            tools:text="5 comments"
+            app:layout_constraintTop_toTopOf="@id/constrains_layout_count"
+            app:layout_constraintStart_toEndOf="@id/tv_like_count"
+            app:layout_constraintEnd_toStartOf="@id/tv_share_count"/>
+
+        <TextView
+            android:id="@+id/tv_share_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="@dimen/size_default"
+            android:gravity="center"
+            tools:text="5 shared"
+            app:layout_constraintTop_toTopOf="@id/constrains_layout_count"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/divider_line"
@@ -127,7 +161,7 @@
         android:layout_height="1dp"
         android:background="@color/grey_light"
         android:layout_marginTop="4dp"
-        app:layout_constraintTop_toBottomOf="@id/linear_count" />
+        app:layout_constraintTop_toBottomOf="@id/constrains_layout_count" />
 
     <LinearLayout
         android:id="@+id/linear_option"
