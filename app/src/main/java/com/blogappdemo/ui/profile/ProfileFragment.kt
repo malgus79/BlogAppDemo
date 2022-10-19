@@ -62,6 +62,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 val data: Intent? = it.data
                 val imageBitmap = data?.extras?.get(DATA)
                 binding.imgProfile.setImageBitmap(imageBitmap as Bitmap?)
+                bitmap = imageBitmap
             }
         }
 
