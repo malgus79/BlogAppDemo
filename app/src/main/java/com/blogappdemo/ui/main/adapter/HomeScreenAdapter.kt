@@ -1,10 +1,11 @@
 package com.blogappdemo.ui.main.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.blogappdemo.R
 import com.blogappdemo.core.BaseViewHolder
@@ -58,6 +59,7 @@ class HomeScreenAdapter(
             tintHeartIcon(item)
             setupLikeCount(item)
             setLikeClickAction(item)
+            setShareClickAction(item)
         }
 
         //foto de perfil y nombre del usuario
@@ -90,7 +92,6 @@ class HomeScreenAdapter(
         }
 
         //pintar el like (favourite)
-        @SuppressLint("ResourceAsColor")
         private fun tintHeartIcon(post: Post) {
             if (!post.liked) {
                 with(binding) {
@@ -129,5 +130,27 @@ class HomeScreenAdapter(
                 postClickListener?.onLikeButtonClick(post, post.liked)
             }
         }
+
+        //opcion de compartir imagen
+        private fun setShareClickAction(post: Post) {
+            binding.btnShare.setOnClickListener {
+                sharePost(post)
+            }
+        }
+
+        //intent para compartir post
+        private fun sharePost(post: Post) {
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, post.post_image )
+                type = "text/*"
+            }
+            val shareIntent = Intent.createChooser(intent, null)
+            startActivity(context, shareIntent, null)
+        }
     }
+
+
+
+
 }

@@ -128,7 +128,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             resultLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
-                "No se encontro app para abir la camara",
+                "No se puede abrir la galeria",
                 Toast.LENGTH_SHORT).show()
         }
     }
