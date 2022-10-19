@@ -1,4 +1,4 @@
-package com.blogappdemo.core
+package com.blogappdemo.utils
 
 import java.util.concurrent.TimeUnit
 

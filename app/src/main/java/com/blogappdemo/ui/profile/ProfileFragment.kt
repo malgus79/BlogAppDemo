@@ -17,8 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
-import com.blogappdemo.core.hide
-import com.blogappdemo.core.show
+import com.blogappdemo.utils.hide
+import com.blogappdemo.utils.show
 import com.blogappdemo.data.remote.auth.AuthDataSource
 import com.blogappdemo.databinding.FragmentProfileBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl

@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.blogappdemo.core.hide
-import com.blogappdemo.core.show
+import com.blogappdemo.utils.hide
+import com.blogappdemo.utils.show
 import com.blogappdemo.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

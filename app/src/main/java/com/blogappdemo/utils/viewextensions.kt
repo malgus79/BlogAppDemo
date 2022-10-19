@@ -1,4 +1,4 @@
-package com.blogappdemo.core
+package com.blogappdemo.utils
 
 import android.content.Context
 import android.view.View

@@ -14,6 +14,10 @@ import com.blogappdemo.databinding.FragmentRegisterBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
 import com.blogappdemo.presentation.auth.AuthViewModelFactory
+import com.blogappdemo.utils.disable
+import com.blogappdemo.utils.enable
+import com.blogappdemo.utils.hide
+import com.blogappdemo.utils.show
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 

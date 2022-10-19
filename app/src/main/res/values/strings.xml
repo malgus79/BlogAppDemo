@@ -4,4 +4,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="profile_button_logout">Sign Out</string>
     <string name="profile_edit_confirm">Confirm edit</string>
+    <string name="error_occurred">An error occurred</string>
+    <string name="post_message_comment_success">Comentario publicado</string>
 </resources>

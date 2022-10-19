@@ -3,6 +3,7 @@ package com.blogappdemo.ui.main
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
@@ -12,8 +13,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
-import com.blogappdemo.core.hide
-import com.blogappdemo.core.show
 import com.blogappdemo.data.model.Post
 import com.blogappdemo.data.remote.home.HomeScreenDataSource
 import com.blogappdemo.databinding.FragmentHomeScreenBinding
@@ -22,12 +21,16 @@ import com.blogappdemo.presentation.home.HomeScreenViewModel
 import com.blogappdemo.presentation.home.HomeScreenViewModelFactory
 import com.blogappdemo.ui.main.adapter.HomeScreenAdapter
 import com.blogappdemo.ui.main.adapter.OnPostClickListener
+import com.blogappdemo.utils.hide
+import com.blogappdemo.utils.show
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickListener {
 
     private lateinit var binding: FragmentHomeScreenBinding
+    private lateinit var ly: LinearLayout
     private val viewModel by viewModels<HomeScreenViewModel> {
         HomeScreenViewModelFactory(HomeScreenRepoImpl(
             HomeScreenDataSource()))
@@ -115,17 +118,11 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                 is Result.Loading -> {
                     Log.d("Like Transaction", "in progress...")
                 }
-
                 is Result.Success -> {
                     Log.d("Like Transaction", "Success")
                 }
-
                 is Result.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Ocurrio un error: ${result.exception}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    resultFailure()
                 }
             }
         }
@@ -138,17 +135,11 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                 is Result.Loading -> {
                     Log.d("Share Transaction", "in progress...")
                 }
-
                 is Result.Success -> {
                     Log.d("Share Transaction", "Success")
                 }
-
                 is Result.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Ocurrio un error: ${result.exception}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    resultFailure()
                 }
             }
         }
@@ -161,19 +152,19 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                 is Result.Loading -> {
                     Log.d("Comment Transaction", "in progress...")
                 }
-
                 is Result.Success -> {
                     Log.d("Comment Transaction", "Success")
+                    Snackbar.make(ly, "Comentario publicado", Snackbar.LENGTH_LONG).show()
                 }
-
                 is Result.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Ocurrio un error: ${result.exception}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    resultFailure()
                 }
             }
         }
+    }
+
+    //snackbar transaction failure
+    private fun resultFailure() {
+        Snackbar.make(ly, "Ocurrio un error", Snackbar.LENGTH_LONG).show()
     }
 }

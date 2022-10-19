@@ -14,6 +14,7 @@ import com.blogappdemo.databinding.FragmentLoginBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
 import com.blogappdemo.presentation.auth.AuthViewModelFactory
+import com.blogappdemo.utils.*
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment(R.layout.fragment_login) {

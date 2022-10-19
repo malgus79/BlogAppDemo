@@ -17,7 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
-import com.blogappdemo.core.hideKeyboard
+import com.blogappdemo.utils.hideKeyboard
 import com.blogappdemo.data.remote.camera.CameraDataSource
 import com.blogappdemo.databinding.FragmentCameraBinding
 import com.blogappdemo.domain.camera.CameraRepoImpl

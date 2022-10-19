@@ -9,11 +9,11 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.blogappdemo.R
 import com.blogappdemo.core.BaseViewHolder
-import com.blogappdemo.core.TimeUtils
-import com.blogappdemo.core.hide
-import com.blogappdemo.core.show
+import com.blogappdemo.utils.hide
+import com.blogappdemo.utils.show
 import com.blogappdemo.data.model.Post
 import com.blogappdemo.databinding.PostItemViewBinding
+import com.blogappdemo.utils.TimeUtils
 import com.bumptech.glide.Glide
 
 class HomeScreenAdapter(
