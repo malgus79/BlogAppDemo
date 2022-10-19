@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -70,11 +69,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
 
                         is Result.Failure -> {
                             binding.progressBar.hide()
-                            Toast.makeText(
-                                requireContext(),
-                                "Ocurrio un error: ${result.exception}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            showResultFailure()
                         }
                     }
                 }
@@ -122,7 +117,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                     Log.d("Like Transaction", "Success")
                 }
                 is Result.Failure -> {
-                    resultFailure()
+                    showResultFailure()
                 }
             }
         }
@@ -139,7 +134,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                     Log.d("Share Transaction", "Success")
                 }
                 is Result.Failure -> {
-                    resultFailure()
+                    showResultFailure()
                 }
             }
         }
@@ -154,17 +149,18 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                 }
                 is Result.Success -> {
                     Log.d("Comment Transaction", "Success")
-                    Snackbar.make(ly, "Comentario publicado", Snackbar.LENGTH_LONG).show()
+                    val ly = binding.root
+                    Snackbar.make(ly, (R.string.post_message_comment_success), Snackbar.LENGTH_LONG).show()
                 }
                 is Result.Failure -> {
-                    resultFailure()
+                    showResultFailure()
                 }
             }
         }
     }
 
     //snackbar transaction failure
-    private fun resultFailure() {
-        Snackbar.make(ly, "Ocurrio un error", Snackbar.LENGTH_LONG).show()
+    private fun showResultFailure() {
+        Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
     }
 }

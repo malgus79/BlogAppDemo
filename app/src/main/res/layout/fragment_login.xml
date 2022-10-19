@@ -14,7 +14,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="E-mail">
+        android:hint="@string/e_mail">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_email"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Password"
+        android:hint="@string/password"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -46,14 +46,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="SignIn" />
+        android:text="@string/signin" />
 
     <TextView
         android:id="@+id/tv_signup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Not have an account ? Sign up" />
+        android:text="@string/not_have_an_account_sign_up" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

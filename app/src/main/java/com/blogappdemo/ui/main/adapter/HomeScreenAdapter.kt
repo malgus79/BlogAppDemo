@@ -1,5 +1,6 @@
 package com.blogappdemo.ui.main.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -18,7 +19,7 @@ import com.bumptech.glide.Glide
 
 class HomeScreenAdapter(
     private val postList: List<Post>,
-    private val onPostClickListener: OnPostClickListener,
+    onPostClickListener: OnPostClickListener,
 ) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
 
@@ -120,6 +121,7 @@ class HomeScreenAdapter(
         }
 
         //contador de likes
+        @SuppressLint("SetTextI18n")
         private fun setupLikeCount(post: Post) {
             if (post.likes > 0) {
                 with(binding) {
@@ -144,6 +146,7 @@ class HomeScreenAdapter(
 
     /* --------------------------------------- SHARED --------------------------------------- */
         //contador de compartir
+        @SuppressLint("SetTextI18n")
         private fun setupShareCount(post: Post) {
             if (post.shares > 0) {
                 with(binding) {
@@ -178,6 +181,7 @@ class HomeScreenAdapter(
 
     /* --------------------------------------- COMMENTS --------------------------------------- */
         //contador de comment
+        @SuppressLint("SetTextI18n")
         private fun setupCommentCount(post: Post) {
             if (post.comments > 0) {
                 with(binding) {

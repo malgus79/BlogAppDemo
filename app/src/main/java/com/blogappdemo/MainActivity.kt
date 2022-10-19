@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     //escuchar cada vez que cambie un destino en la app
     private fun observeDestinationChange() {
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
                 R.id.loginFragment -> {
                     binding.bottomNavigationView.hide()

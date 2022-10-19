@@ -3,6 +3,7 @@ package com.blogappdemo.data.remote.auth
 import android.graphics.Bitmap
 import android.net.Uri
 import com.blogappdemo.data.model.User
+import com.blogappdemo.utils.Constants.USERS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -30,7 +31,7 @@ class AuthDataSource {
             val authResult =
                 FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).await()
             authResult.user?.uid?.let { uid ->
-                FirebaseFirestore.getInstance().collection("users").document(uid).set(
+                FirebaseFirestore.getInstance().collection(USERS).document(uid).set(
                     User(email, username)).await()
             }
             authResult.user
@@ -46,7 +47,7 @@ class AuthDataSource {
         //obtener la uri de la foto
         val baos = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        var downloadUrl =
+        val downloadUrl =
             imageRef.putBytes(baos.toByteArray()).await().storage.downloadUrl.await().toString()
         //setear la foto al profile
         val profileUpdates = UserProfileChangeRequest.Builder()

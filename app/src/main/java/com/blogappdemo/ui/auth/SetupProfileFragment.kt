@@ -21,6 +21,7 @@ import com.blogappdemo.databinding.FragmentSetupProfileBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
 import com.blogappdemo.presentation.auth.AuthViewModelFactory
+import com.blogappdemo.utils.Constants.DATA
 
 class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
 
@@ -48,7 +49,7 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = it.data
-                val imageBitmap = data?.extras?.get("data") as Bitmap
+                val imageBitmap = data?.extras?.get(DATA) as Bitmap
                 binding.ivProfileImage.setImageBitmap(imageBitmap)
                 bitmap = imageBitmap
             }
@@ -58,7 +59,7 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         binding.btnCreateProfile.setOnClickListener {
             val username = binding.etUsername.text.toString().trim()
             val alertDialog =
-                AlertDialog.Builder(requireContext()).setTitle("Uploading photo...").create()
+                AlertDialog.Builder(requireContext()).setTitle(R.string.uploading_photo).create()
             bitmap?.let {
                 if (username.isNotEmpty()) {
                     viewModel.updateUserProfile(imageBitmap = it, username = username)
@@ -88,7 +89,7 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
             resultLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
-                "No se encontro app para abir la camara",
+                (R.string.camera_app_not_found),
                 Toast.LENGTH_SHORT).show()
         }
     }

@@ -14,10 +14,7 @@ import com.blogappdemo.databinding.FragmentRegisterBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
 import com.blogappdemo.presentation.auth.AuthViewModelFactory
-import com.blogappdemo.utils.disable
-import com.blogappdemo.utils.enable
-import com.blogappdemo.utils.hide
-import com.blogappdemo.utils.show
+import com.blogappdemo.utils.*
 
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
@@ -31,7 +28,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentRegisterBinding.bind(view)
         signUp()
-
     }
 
     //metodo para registrarse
@@ -43,7 +39,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             val confirmPassword = binding.tietConfirmPassword.text.toString().trim()
             val email = binding.tietEmail.text.toString().trim()
 
-
             if (validateUserData(password,
                     confirmPassword,
                     username,
@@ -51,6 +46,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             ) return@setOnClickListener
 
             createUser(email, password, username)
+            it.hideKeyboard()
 
             Log.d("signUpData", "data: $username $password $confirmPassword $email ")
         }
@@ -89,29 +85,29 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
     ): Boolean {
         if (password != confirmPassword) {
             with(binding) {
-                tietConfirmPassword.error = "Password does not match"
-                tietPassword.error = "Password does not match"
+                tietConfirmPassword.error = getString(R.string.password_does_not_match)
+                tietPassword.error = getString(R.string.password_does_not_match)
             }
             return true
         }
 
         if (username.isEmpty()) {
-            binding.tietUsername.error = "Username is empty"
+            binding.tietUsername.error = getString(R.string.username_is_empty)
             return true
         }
 
         if (email.isEmpty()) {
-            binding.tietEmail.error = "Email is empty"
+            binding.tietEmail.error = getString(R.string.email_is_empty)
             return true
         }
 
         if (password.isEmpty()) {
-            binding.tietPassword.error = "Password is empty"
+            binding.tietPassword.error = getString(R.string.password_is_empty)
             return true
         }
 
         if (confirmPassword.isEmpty()) {
-            binding.tietConfirmPassword.error = "Confirm Password is empty"
+            binding.tietConfirmPassword.error = getString(R.string.confirm_password_is_empty)
             return true
         }
         return false

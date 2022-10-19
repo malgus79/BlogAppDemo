@@ -2,10 +2,10 @@ package com.blogappdemo.ui.auth
 
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.*
@@ -15,11 +15,13 @@ import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
 import com.blogappdemo.presentation.auth.AuthViewModelFactory
 import com.blogappdemo.utils.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
+    private lateinit var ly: LinearLayout
     private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val viewModel by viewModels<AuthViewModel> {
         AuthViewModelFactory(AuthRepoImpl(
@@ -67,18 +69,18 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     //validacion de email y pass
     private fun validateCredentials(email: String, password: String) {
         if (email.isEmpty()) {
-            binding.tietEmail.error = "E-mail is empty"
+            binding.tietEmail.error = getString(R.string.email_is_empty)
             return
         }
         if (password.isEmpty()) {
-            binding.tietPassword.error = "Password is empty"
+            binding.tietPassword.error = getString(R.string.password_is_empty)
             return
         }
     }
 
     //logear usuario con firebase
     private fun signIn(email: String, password: String) {
-        viewModel.signIn(email, password).observe(viewLifecycleOwner, Observer { result ->
+        viewModel.signIn(email, password).observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Result.Loading -> {
                     with(binding) {
@@ -104,13 +106,14 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         progressBar.hide()
                         btnSignin.enable()
                     }
-                    Toast.makeText(
-                        requireContext(),
-                        "Error: ${result.exception}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showResultFailure()
                 }
             }
-        })
+        }
+    }
+
+    //snackbar transaction failure
+    private fun showResultFailure() {
+        Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
     }
 }

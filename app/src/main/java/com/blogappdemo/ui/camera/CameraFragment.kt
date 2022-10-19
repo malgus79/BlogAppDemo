@@ -8,12 +8,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
@@ -23,10 +23,13 @@ import com.blogappdemo.databinding.FragmentCameraBinding
 import com.blogappdemo.domain.camera.CameraRepoImpl
 import com.blogappdemo.presentation.camera.CameraViewModel
 import com.blogappdemo.presentation.camera.CameraViewModelFactory
+import com.blogappdemo.utils.Constants.DATA
+import com.google.android.material.snackbar.Snackbar
 
 class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     private lateinit var binding: FragmentCameraBinding
+    private lateinit var ly: LinearLayout
     private var bitmap: Bitmap? = null
     private var photoSelectedUri: Uri? = null
     private val viewModel by viewModels<CameraViewModel> {
@@ -37,7 +40,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val imageBitmap = it.data?.extras?.get("data") as Bitmap
+                val imageBitmap = it.data?.extras?.get(DATA) as Bitmap
                 binding.ivPostImage.setImageBitmap(imageBitmap)
                 bitmap = imageBitmap
             }
@@ -64,7 +67,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         }
 
 
-        binding.cvUploadPhoto.setOnClickListener {
+        binding.cvUploadPhoto.setOnClickListener { it ->
             with(binding) {
                 ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
                 tvUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
@@ -73,11 +76,11 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             //subir foto desde camara
             bitmap?.let {
                 viewModel.uploadPhotoCamera(it, binding.etDescription.text.toString().trim())
-                    .observe(viewLifecycleOwner, Observer { result ->
+                    .observe(viewLifecycleOwner) { result ->
                         when (result) {
                             is Result.Loading -> {
                                 Toast.makeText(requireContext(),
-                                    "Uploading photo...",
+                                    (R.string.uploading_photo),
                                     Toast.LENGTH_SHORT).show()
                             }
                             is Result.Success -> {
@@ -86,22 +89,20 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                                 binding.etDescription.setText("")
                             }
                             is Result.Failure -> {
-                                Toast.makeText(requireContext(),
-                                    "Error ${result.exception}",
-                                    Toast.LENGTH_SHORT).show()
+                                showResultFailure()
                             }
                         }
-                    })
+                    }
             }
 
             //subir foto desde galeria
             photoSelectedUri?.let {
                 viewModel.uploadPhotoGallery(it, binding.etDescription.text.toString().trim())
-                    .observe(viewLifecycleOwner, Observer { result ->
+                    .observe(viewLifecycleOwner) { result ->
                         when (result) {
                             is Result.Loading -> {
                                 Toast.makeText(requireContext(),
-                                    "Uploading photo...",
+                                    (R.string.uploading_photo),
                                     Toast.LENGTH_SHORT).show()
                             }
                             is Result.Success -> {
@@ -110,12 +111,10 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                                 binding.etDescription.setText("")
                             }
                             is Result.Failure -> {
-                                Toast.makeText(requireContext(),
-                                    "Error ${result.exception}",
-                                    Toast.LENGTH_SHORT).show()
+                                showResultFailure()
                             }
                         }
-                    })
+                    }
             }
             it.hideKeyboard()
         }
@@ -128,7 +127,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             resultLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
-                "No se puede abrir la galeria",
+                (R.string.cant_open_gallery),
                 Toast.LENGTH_SHORT).show()
         }
     }
@@ -140,7 +139,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             resultLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
-                "No se encontro app para abir la camara",
+                (R.string.camera_app_not_found),
                 Toast.LENGTH_SHORT).show()
         }
     }
@@ -157,5 +156,9 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         super.onPause()
     }
 
+    //snackbar transaction failure
+    private fun showResultFailure() {
+        Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
+    }
 
 }

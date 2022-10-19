@@ -12,20 +12,23 @@
         android:layout_height="200dp"
         android:layout_marginTop="16dp"
         android:src="@drawable/ic_add_a_photo"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:contentDescription="@string/profile_image"/>
 
     <EditText
         android:id="@+id/et_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        android:layout_marginTop="16dp"/>
+        android:inputType="textCapWords"
+        android:hint="@string/username"
+        android:layout_marginTop="16dp"
+        android:importantForAutofill="no" />
 
     <Button
         android:id="@+id/btn_create_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="create profile"/>
+        android:text="@string/create_profile"/>
 
 </LinearLayout>

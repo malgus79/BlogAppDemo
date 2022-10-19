@@ -13,7 +13,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre completo">
+        android:inputType="textCapWords"
+        android:hint="@string/full_name">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_username"
@@ -29,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="E-mail">
+        android:hint="@string/e_mail">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tiet_email"
@@ -45,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Password"
+        android:hint="@string/password"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -62,7 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:hint="Confirm password"
+        android:hint="@string/confirm_password"
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -78,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="SignUp" />
+        android:text="@string/signup" />
 
     <ProgressBar
         android:id="@+id/progress_bar"

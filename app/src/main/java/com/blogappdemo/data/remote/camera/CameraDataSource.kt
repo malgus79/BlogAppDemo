@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import com.blogappdemo.data.model.Post
 import com.blogappdemo.data.model.Poster
+import com.blogappdemo.utils.Constants.POSTS
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -25,7 +26,7 @@ class CameraDataSource {
 
         user?.let {
             it.displayName?.let { displayName ->
-                FirebaseFirestore.getInstance().collection("posts").add(Post(
+                FirebaseFirestore.getInstance().collection(POSTS).add(Post(
                     poster = Poster(username = displayName,
                         uid = user.uid,
                         profile_picture = it.photoUrl.toString()),
@@ -46,7 +47,7 @@ class CameraDataSource {
 
         user?.let {
             it.displayName?.let { displayName ->
-                FirebaseFirestore.getInstance().collection("posts").add(Post(
+                FirebaseFirestore.getInstance().collection(POSTS).add(Post(
                     poster = Poster(username = displayName,
                         uid = user.uid,
                         profile_picture = it.photoUrl.toString()),

@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -24,7 +23,9 @@ import com.blogappdemo.databinding.FragmentProfileBinding
 import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
 import com.blogappdemo.presentation.auth.AuthViewModelFactory
+import com.blogappdemo.utils.Constants.DATA
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
@@ -59,9 +60,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val data: Intent? = it.data
-                val imageBitmap = data?.extras?.get("data")
+                val imageBitmap = data?.extras?.get(DATA)
                 binding.imgProfile.setImageBitmap(imageBitmap as Bitmap?)
-                bitmap = imageBitmap
             }
         }
 
@@ -79,7 +79,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.btnEditConfirm.setOnClickListener {
             val username = binding.tvProfileName.text.toString().trim()
             val alertDialog =
-                AlertDialog.Builder(requireContext()).setTitle("Uploading changes...").create()
+                AlertDialog.Builder(requireContext()).setTitle(R.string.uploading_changes).create()
             bitmap?.let {
                 if (username.isNotEmpty()) {
                     viewModel.updateUserProfile(imageBitmap = it, username = username)
@@ -118,9 +118,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         try {
             resultLauncher.launch(intent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(requireContext(),
-                "No se encontro app para abir la camara",
-                Toast.LENGTH_SHORT).show()
+            val ly = binding.root
+            Snackbar.make(ly, (R.string.application_not_found), Snackbar.LENGTH_LONG).show()
         }
     }
 
