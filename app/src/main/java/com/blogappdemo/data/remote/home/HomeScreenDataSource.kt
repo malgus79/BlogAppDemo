@@ -10,8 +10,8 @@ import kotlinx.coroutines.withContext
 
 class HomeScreenDataSource {
 
-    val increment = FieldValue.increment(1)
-    val decrement = FieldValue.increment(-1)
+    private val increment = FieldValue.increment(1)
+    private val decrement = FieldValue.increment(-1)
 
     //datasource va a buscar la info en Firebase
     suspend fun getLatestPosts(): Result<List<Post>> {
@@ -35,9 +35,14 @@ class HomeScreenDataSource {
                         isPostLiked(post.id, safeUser.uid)
                     }
 
-                    //ejecutar metodo de verificacion del SHARES
+                    //ejecutar metodo de verificacion de SHARES
                     val isShared = FirebaseAuth.getInstance().currentUser?.let { safeUser ->
                         isPostShared(post.id, safeUser.uid)
+                    }
+
+                    //ejecutar metodo de verificacion de COMMENTS
+                    val isCommented = FirebaseAuth.getInstance().currentUser?.let { safeUser ->
+                        isPostComment(post.id, safeUser.uid)
                     }
 
                     //estimar fecha en el caso de que sea nula en el momento que está en el server
@@ -55,6 +60,12 @@ class HomeScreenDataSource {
                         id = post.id
                         if (isShared != null) {
                             shared = isShared
+                        }
+
+                        //poner al post el valor (true/false) si esta o no comentado
+                        id = post.id
+                        if (isCommented != null) {
+                            commented = isCommented
                         }
                     }
                     postList.add(fbPost)
@@ -109,7 +120,7 @@ class HomeScreenDataSource {
                             )
                         }
 
-                        //incrementar en 1 el numero de likes dle post
+                        //incrementar en 1 el numero de likes del post
                         transaction.update(postRef, "likes", increment)
                     } else {
                         //disminuir en 1 los likes y remover el usuario del arrays
@@ -168,12 +179,71 @@ class HomeScreenDataSource {
                             )
                         }
 
-                        //incrementar en 1 el numero de likes dle post
+                        //incrementar en 1 el numero de share del post
                         transaction.update(postRef, "shares", increment)
                     } else {
-                        //disminuir en 1 los likes y remover el usuario del arrays
+                        //incrementar en 1 cada click sucesivamente
                         transaction.update(postRef, "shares", increment)
                         transaction.update(postsSharesRef, "shares", FieldValue.arrayUnion(uid))
+                    }
+                }
+            }
+        }.addOnFailureListener {
+            throw Exception(it.message)
+        }
+    }
+
+    /* --------------------------------------- COMMENTS --------------------------------------- */
+
+    //verificar si el array contiene el usuario (si esta shared el post)
+    private suspend fun isPostComment(postId: String, uid: String): Boolean {
+        val post =
+            FirebaseFirestore.getInstance().collection("postsComments").document(postId).get().await()
+        if (!post.exists()) return false
+        val commentArray: List<String> = post.get("comments") as List<String>
+        return commentArray.contains(uid)
+    }
+
+    //estados de los shares
+    fun registerCommentButtonState(postId: String, commented: Boolean) {
+        //obtener datos de firebase, del post que se está compartiendo
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        val postRef = FirebaseFirestore.getInstance().collection("posts").document(postId)
+        val postsCommentsRef =
+            FirebaseFirestore.getInstance().collection("postsCommented").document(postId)
+
+        //instamcia de la base de datos
+        val database = FirebaseFirestore.getInstance()
+
+        //correr transaccion sobre la base de datos
+        database.runTransaction { transaction ->
+            //obtener el post
+            val snapshot = transaction.get(postRef)
+            //ver la cantidad de shares que tiene
+            val commentCount = snapshot.getLong("comments")
+
+            if (commentCount != null) {
+                if (commentCount >= 0) {
+                    if (commented) {
+                        //si el post existe
+                        if (transaction.get(postsCommentsRef).exists()) {
+                            //adjuntar el usuario
+                            transaction.update(postsCommentsRef, "comments", FieldValue.arrayUnion(uid))
+                        } else {
+                            //si es el primer like
+                            transaction.set(
+                                postsCommentsRef,
+                                hashMapOf("comments" to arrayListOf(uid)),
+                                SetOptions.merge()
+                            )
+                        }
+
+                        //incrementar en 1 el numero de commentario del post
+                        transaction.update(postRef, "comments", increment)
+                    } else {
+                        //incrementar en 1 cada click sucesivamente
+                        transaction.update(postRef, "comments", increment)
+                        transaction.update(postsCommentsRef, "comments", FieldValue.arrayUnion(uid))
                     }
                 }
             }

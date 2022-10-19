@@ -9,4 +9,5 @@ interface HomeScreenRepo {
     suspend fun getLatestPosts(): Result<List<Post>>
     suspend fun registerLikeButtonState(postId: String, liked: Boolean)
     suspend fun registerShareButtonState(postId: String, shared: Boolean)
+    suspend fun registerCommentButtonState(postId: String, commented: Boolean)
 }

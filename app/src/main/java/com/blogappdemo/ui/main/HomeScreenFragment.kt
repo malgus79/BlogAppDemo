@@ -131,7 +131,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         }
     }
 
-    //al hacer click en share
+    //al hacer click en compartir
     override fun onShareButtonClick(post: Post, shared: Boolean) {
         viewModel.registerShareButtonState(post.id, shared).observe(viewLifecycleOwner) { result ->
             when (result) {
@@ -141,6 +141,29 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
 
                 is Result.Success -> {
                     Log.d("Share Transaction", "Success")
+                }
+
+                is Result.Failure -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Ocurrio un error: ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+    }
+
+    //al hacer click en comentarios
+    override fun onCommentButtonClick(post: Post, commented: Boolean) {
+        viewModel.registerCommentButtonState(post.id, commented).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    Log.d("Comment Transaction", "in progress...")
+                }
+
+                is Result.Success -> {
+                    Log.d("Comment Transaction", "Success")
                 }
 
                 is Result.Failure -> {

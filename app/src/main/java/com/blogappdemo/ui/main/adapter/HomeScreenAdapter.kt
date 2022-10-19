@@ -22,7 +22,7 @@ class HomeScreenAdapter(
 ) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    //estado de likes
+    //listeners likes/shared/comments
     private var postClickListener: OnPostClickListener? = null
 
     init {
@@ -52,17 +52,25 @@ class HomeScreenAdapter(
         val context: Context,
     ) : BaseViewHolder<Post>(binding.root) {
         override fun bind(item: Post) {
+            //Header
             setupProfileInfo(item)
             addPostTimeStamp(item)
-            setupPostImage(item)
             setupPostDescription(item)
+            //Post Image
+            setupPostImage(item)
+            //Like
             tintHeartIcon(item)
             setupLikeCount(item)
             setLikeClickAction(item)
+            //Share
             setupShareCount(item)
             setShareClickAction(item)
+            //Comment
+            setupCommentCount(item)
+            setCommentClickAction(item)
         }
 
+    /* --------------------------------------- HEADER --------------------------------------- */
         //foto de perfil y nombre del usuario
         private fun setupProfileInfo(post: Post) {
             Glide.with(context).load(post.poster?.profile_picture).centerCrop()
@@ -78,11 +86,6 @@ class HomeScreenAdapter(
             binding.tvPostTimestamp.text = createdAt
         }
 
-        //imagen del post
-        private fun setupPostImage(post: Post) {
-            Glide.with(context).load(post.post_image).centerCrop().into(binding.ivPostImage)
-        }
-
         //postDescription
         private fun setupPostDescription(post: Post) {
             if (post.post_description.isEmpty()) {
@@ -92,6 +95,13 @@ class HomeScreenAdapter(
             }
         }
 
+    /* --------------------------------------- POST IMAGE --------------------------------------- */
+        //imagen del post
+        private fun setupPostImage(post: Post) {
+            Glide.with(context).load(post.post_image).centerCrop().into(binding.ivPostImage)
+        }
+
+    /* --------------------------------------- LIKES --------------------------------------- */
         //pintar el like (favourite)
         private fun tintHeartIcon(post: Post) {
             if (!post.liked) {
@@ -132,7 +142,8 @@ class HomeScreenAdapter(
             }
         }
 
-        //contador de share
+    /* --------------------------------------- SHARED --------------------------------------- */
+        //contador de compartir
         private fun setupShareCount(post: Post) {
             if (post.shares > 0) {
                 with(binding) {
@@ -163,6 +174,30 @@ class HomeScreenAdapter(
             }
             val shareIntent = Intent.createChooser(intent, null)
             startActivity(context, shareIntent, null)
+        }
+
+    /* --------------------------------------- COMMENTS --------------------------------------- */
+        //contador de comment
+        private fun setupCommentCount(post: Post) {
+            if (post.comments > 0) {
+                with(binding) {
+                    tvCommentCount.show()
+                    tvCommentCount.text = "${post.comments} comments"
+                }
+            } else {
+                binding.tvCommentCount.hide()
+            }
+        }
+
+        //accion al click del comment
+        private fun setCommentClickAction(post: Post) {
+            binding.btnComment.setOnClickListener {
+                if (post.commented) post.apply { commented = false } else post.apply { commented = true }
+                //pintar color segun estado
+                tintHeartIcon(post)
+                //enviar al fragment si fue linkeado y su estado en ese momento
+                postClickListener?.onCommentButtonClick(post, post.commented)
+            }
         }
     }
 }

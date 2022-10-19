@@ -83,6 +83,18 @@ class HomeScreenViewModel(private val repo: HomeScreenRepo) : ViewModel() {
             emit(Result.Failure(Exception(throwable.message)))
         }
     }
+
+    //Estado de Comments
+    fun registerCommentButtonState(postId: String, commented: Boolean) = liveData(Dispatchers.IO) {
+        emit(Result.Loading())
+        kotlin.runCatching {
+            repo.registerCommentButtonState(postId, commented)
+        }.onSuccess {
+            emit(Result.Success(Unit))
+        }.onFailure { throwable ->
+            emit(Result.Failure(Exception(throwable.message)))
+        }
+    }
 }
 
 //se crea el Factory para poder generar una instancia del vewModel con un parametro en el constructor

@@ -14,10 +14,13 @@ data class Post(
     val poster: Poster? = null,
     val likes: Long = 0,
     val shares: Long = 0,
+    val comments: Long = 0,
     @Exclude @JvmField //para excluir de firebase
     var liked: Boolean = false,
     @Exclude @JvmField //para excluir de firebase
     var shared: Boolean = false,
+    @Exclude @JvmField //para excluir de firebase
+    var commented: Boolean = false,
 )
 
 data class Poster(

@@ -8,8 +8,14 @@ class HomeScreenRepoImpl(private val dataSource: HomeScreenDataSource) : HomeScr
 
     //el repo va hacia el datasource a buscar la info
     override suspend fun getLatestPosts(): Result<List<Post>> = dataSource.getLatestPosts()
+
     override suspend fun registerLikeButtonState(postId: String, liked: Boolean) =
         dataSource.registerLikeButtonState(postId, liked)
+
     override suspend fun registerShareButtonState(postId: String, shared: Boolean) =
         dataSource.registerShareButtonState(postId, shared)
+
+    override suspend fun registerCommentButtonState(postId: String, commented: Boolean) =
+        dataSource.registerCommentButtonState(postId, commented)
+
 }
