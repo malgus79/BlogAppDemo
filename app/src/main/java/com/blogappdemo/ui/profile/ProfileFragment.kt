@@ -70,8 +70,8 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         binding.btnEditImage.setOnClickListener {
             editImageProfile()
             with(binding) {
-                btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.yellow))
-                btnEditImage.setIconTintResource(R.color.purple_700)
+                btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_light))
+                btnEditImage.setIconTintResource(R.color.white)
                 btnEditConfirm.show()
             }
         }

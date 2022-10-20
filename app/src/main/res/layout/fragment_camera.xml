@@ -37,7 +37,7 @@
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="@color/blue_light"
         android:src="@drawable/ic_cloud_upload"
         app:cardCornerRadius="50dp"
         android:focusable="true"
@@ -59,7 +59,7 @@
             android:layout_gravity="bottom"
             android:gravity="center_horizontal"
             android:text="Upload"
-            android:textColor="@color/yellow" />
+            android:textColor="@color/black" />
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.button.MaterialButton
@@ -70,7 +70,7 @@
         android:padding="@dimen/size_default"
         android:text="take photo"
         app:cornerRadius="50dp"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="@color/blue_light"
         app:layout_constraintEnd_toStartOf="@+id/btn_open_gallery"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_upload_photo" />
@@ -83,7 +83,7 @@
         android:padding="@dimen/size_default"
         android:text="open gallery"
         app:cornerRadius="50dp"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="@color/blue_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/btn_take_photo"
         app:layout_constraintTop_toBottomOf="@id/cv_upload_photo" />
