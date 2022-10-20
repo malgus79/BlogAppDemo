@@ -12,7 +12,7 @@ class AuthRepoImpl(private val dataSource: AuthDataSource) : AuthRepo {
     override suspend fun signUp(email: String, password: String, username: String): FirebaseUser? =
         dataSource.signUp(email, password, username)
 
-    override suspend fun updateProfile(imageBitmap: Bitmap, username: String) =
+    override suspend fun updateUserProfile(imageBitmap: Bitmap, username: String) =
         dataSource.updateUserProfile(imageBitmap, username)
 
 }
