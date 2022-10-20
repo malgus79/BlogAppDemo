@@ -25,8 +25,9 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:gravity=""
-        android:hint="Description"
+        android:autofillHints="name"
+        android:inputType="textCapWords"
+        android:hint="@string/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_post_image" />
@@ -50,6 +51,7 @@
             android:id="@+id/iv_upload"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:contentDescription="@string/icon_upload"
             android:src="@drawable/ic_cloud_upload" />
 
         <TextView
@@ -58,7 +60,7 @@
             android:layout_height="30dp"
             android:layout_gravity="bottom"
             android:gravity="center_horizontal"
-            android:text="Upload"
+            android:text="@string/upload"
             android:textColor="@color/black" />
     </androidx.cardview.widget.CardView>
 
@@ -68,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:padding="@dimen/size_default"
-        android:text="take photo"
+        android:text="@string/take_photo"
         app:cornerRadius="50dp"
         android:backgroundTint="@color/blue_light"
         app:layout_constraintEnd_toStartOf="@+id/btn_open_gallery"
@@ -81,7 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:padding="@dimen/size_default"
-        android:text="open gallery"
+        android:text="@string/open_gallery"
         app:cornerRadius="50dp"
         android:backgroundTint="@color/blue_light"
         app:layout_constraintEnd_toEndOf="parent"

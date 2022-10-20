@@ -8,7 +8,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -17,13 +16,13 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
-import com.blogappdemo.utils.hideKeyboard
 import com.blogappdemo.data.remote.camera.CameraDataSource
 import com.blogappdemo.databinding.FragmentCameraBinding
 import com.blogappdemo.domain.camera.CameraRepoImpl
 import com.blogappdemo.presentation.camera.CameraViewModel
 import com.blogappdemo.presentation.camera.CameraViewModelFactory
 import com.blogappdemo.utils.Constants.DATA
+import com.blogappdemo.utils.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 
 class CameraFragment : Fragment(R.layout.fragment_camera) {

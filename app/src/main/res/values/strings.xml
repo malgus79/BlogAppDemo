@@ -43,5 +43,10 @@
     <string name="comment">Comment</string>
     <string name="share">Share</string>
     <string name="divider_end">Divider end</string>
+    <string name="description">Description</string>
+    <string name="upload">Upload</string>
+    <string name="icon_upload">Icon upload</string>
+    <string name="take_photo">Take photo</string>
+    <string name="open_gallery">Open gallery</string>
 
 </resources>
