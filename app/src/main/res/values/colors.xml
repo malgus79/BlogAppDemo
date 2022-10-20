@@ -7,6 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
     <color name="red_like">#FF0000</color>
     <color name="red_light">#F34949</color>
     <color name="yellow">#FFEB3B</color>
@@ -14,4 +16,9 @@
     <color name="grey_light">#DFDFDF</color>
     <color name="blue_light">#079BFF</color>
     <color name="blue">#0000FF</color>
+
+    <color name="fuscia">#B300FF</color>
+    <color name="pink">#DE09DD</color>
+    <color name="pink_fluor">#F5157B</color>
+
 </resources>

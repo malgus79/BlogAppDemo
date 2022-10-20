@@ -114,6 +114,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     //snackbar transaction failure
     private fun showResultFailure() {
+        val ly = binding.root
         Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
     }
 }

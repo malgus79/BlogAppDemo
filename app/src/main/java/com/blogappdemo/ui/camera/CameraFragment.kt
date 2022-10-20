@@ -29,7 +29,6 @@ import com.google.android.material.snackbar.Snackbar
 class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     private lateinit var binding: FragmentCameraBinding
-    private lateinit var ly: LinearLayout
     private var bitmap: Bitmap? = null
     private var photoSelectedUri: Uri? = null
     private val viewModel by viewModels<CameraViewModel> {
@@ -158,6 +157,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     //snackbar transaction failure
     private fun showResultFailure() {
+        val ly = binding.root
         Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
     }
 
