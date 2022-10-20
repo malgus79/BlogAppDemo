@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BlogAppDemo</string>
+    <string name="app_name">BlogBook</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="home">Home</string>
     <string name="add_photo">Add photo</string>
