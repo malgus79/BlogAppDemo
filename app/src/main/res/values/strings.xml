@@ -34,5 +34,14 @@
     <string name="error_occurred">An error occurred</string>
 
     <string name="post_message_comment_success">Posted comment</string>
+    <string name="post_image">Post image</string>
+    <string name="like_icon">Like icon</string>
+    <string name="fav_icon">Fav icon</string>
+    <string name="divider_line">Divider line</string>
+
+    <string name="like">Like</string>
+    <string name="comment">Comment</string>
+    <string name="share">Share</string>
+    <string name="divider_end">Divider end</string>
 
 </resources>
