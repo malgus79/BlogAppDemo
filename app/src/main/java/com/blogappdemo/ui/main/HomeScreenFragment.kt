@@ -29,7 +29,6 @@ import kotlinx.coroutines.launch
 class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickListener {
 
     private lateinit var binding: FragmentHomeScreenBinding
-    private lateinit var ly: LinearLayout
     private val viewModel by viewModels<HomeScreenViewModel> {
         HomeScreenViewModelFactory(HomeScreenRepoImpl(
             HomeScreenDataSource()))
@@ -161,6 +160,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
 
     //snackbar transaction failure
     private fun showResultFailure() {
+        val ly = binding.root
         Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
     }
 }
