@@ -1,9 +1,10 @@
 package com.blogappdemo.ui.main
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.widget.LinearLayout
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -43,6 +44,10 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         }
         callback.isEnabled
 
+        val result = listOf<Post>()
+        initRecyclerView(result)
+        configSwipe()
+
         //obtener data de <post> segun el lifecycle con stateFlow
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -62,8 +67,7 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
                             } else {
                                 binding.emptyContainer.hide()
                             }
-                            binding.rvHome.adapter =
-                                HomeScreenAdapter(result.data, this@HomeScreenFragment)
+                            initRecyclerView(result.data)
                         }
 
                         is Result.Failure -> {
@@ -103,6 +107,24 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         })
 
  */
+    }
+
+    //recyclerView
+    private fun initRecyclerView(result: List<Post>) {
+        binding.rvHome.adapter =
+            HomeScreenAdapter(result, this@HomeScreenFragment)
+    }
+
+    //config del swipe
+    private fun configSwipe() {
+        binding.swipe.setColorSchemeResources(R.color.blue3, R.color.blue2)
+        binding.swipe.setProgressBackgroundColorSchemeResource(R.color.grey_light)
+
+        binding.swipe.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                binding.swipe.isRefreshing = false
+            }, 2000)
+        }
     }
 
     //al hacer click en like

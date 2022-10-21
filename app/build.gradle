@@ -89,4 +89,7 @@ dependencies {
     //Lifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01"
 
+    //Swipe
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
 }
