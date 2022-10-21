@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BlogBook</string>
+    <string name="app_name" translatable="false">BlogBook</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="home">Home</string>
     <string name="add_photo">Add photo</string>
@@ -42,11 +42,16 @@
     <string name="like">Like</string>
     <string name="comment">Comment</string>
     <string name="share">Share</string>
+
+    <string name="comments">Comments</string>
+    <string name="shared">Shared</string>
+
     <string name="divider_end">Divider end</string>
     <string name="description">Description</string>
     <string name="upload">Upload</string>
     <string name="icon_upload">Icon upload</string>
     <string name="take_photo">Take photo</string>
     <string name="open_gallery">Open gallery</string>
+
 
 </resources>

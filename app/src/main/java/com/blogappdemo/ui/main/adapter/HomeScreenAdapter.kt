@@ -10,11 +10,11 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.blogappdemo.R
 import com.blogappdemo.core.BaseViewHolder
-import com.blogappdemo.utils.hide
-import com.blogappdemo.utils.show
 import com.blogappdemo.data.model.Post
 import com.blogappdemo.databinding.PostItemViewBinding
 import com.blogappdemo.utils.TimeUtils
+import com.blogappdemo.utils.hide
+import com.blogappdemo.utils.show
 import com.bumptech.glide.Glide
 
 class HomeScreenAdapter(
@@ -126,7 +126,7 @@ class HomeScreenAdapter(
             if (post.likes > 0) {
                 with(binding) {
                     tvLikeCount.show()
-                    tvLikeCount.text = "${post.likes} likes"
+                    tvLikeCount.text = "${post.likes}"
                 }
             } else {
                 binding.tvLikeCount.hide()
@@ -149,9 +149,16 @@ class HomeScreenAdapter(
         @SuppressLint("SetTextI18n")
         private fun setupShareCount(post: Post) {
             if (post.shares > 0) {
-                with(binding) {
-                    tvShareCount.show()
-                    tvShareCount.text = "${post.shares} shared"
+                if (post.shares == 1L) {
+                    with(binding) {
+                        tvShareCount.show()
+                        tvShareCount.text = "${post.shares} vez compartido"
+                    }
+                } else {
+                    with(binding) {
+                        tvShareCount.show()
+                        tvShareCount.text = "${post.shares} veces compartido"
+                    }
                 }
             } else {
                 binding.tvShareCount.hide()
@@ -184,10 +191,18 @@ class HomeScreenAdapter(
         @SuppressLint("SetTextI18n")
         private fun setupCommentCount(post: Post) {
             if (post.comments > 0) {
-                with(binding) {
-                    tvCommentCount.show()
-                    tvCommentCount.text = "${post.comments} comments"
+                if (post.comments == 1L) {
+                    with(binding) {
+                        tvCommentCount.show()
+                        tvCommentCount.text = "${post.comments} comentario"
+                    }
+                } else {
+                    with(binding) {
+                        tvCommentCount.show()
+                        tvCommentCount.text = "${post.comments} comentarios"
+                    }
                 }
+
             } else {
                 binding.tvCommentCount.hide()
             }

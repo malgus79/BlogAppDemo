@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home">Home</string>
+    <string name="add_photo">Agregar Foto</string>
+    <string name="profile">Perfil</string>
+
+    <string name="signin">Iniciar sesión</string>
+    <string name="not_have_an_account_sign_up">¿No tienes una cuenta? ? Registrate</string>
+    <string name="signup">Registrarse</string>
+    <string name="create_profile">Crear perfil</string>
+    <string name="profile_button_logout">Cerrar sesión</string>
+
+    <string name="username_is_empty">Nombre de usuario está vacío</string>
+    <string name="email_is_empty">Email está vacío</string>
+    <string name="password_is_empty">Contraseña está vacía</string>
+    <string name="confirm_password_is_empty">Confirmar contraseña está vacía</string>
+
+    <string name="username">Nombre de usuario</string>
+    <string name="full_name">Nombre completo</string>
+    <string name="e_mail">Correo electrónico</string>
+    <string name="password">Contraseña</string>
+    <string name="password_does_not_match">Las contraseñas no coinciden</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="profile_image">Imagen de perfil</string>
+    <string name="profile_edit_confirm">Confirmar cambios</string>
+
+    <string name="uploading_changes">"Cargando cambios…"</string>
+    <string name="uploading_photo">Cargando foto…</string>
+    <string name="cant_open_gallery">No se puede abrir la galería</string>
+    <string name="camera_app_not_found">Aplicación de cámara no encontrada.</string>
+    <string name="application_not_found">No se encontró la aplicación para abrir la cámara.</string>
+
+    <string name="error_occurred">Ocurrió un error</string>
+
+    <string name="post_message_comment_success">Comentario publicado</string>
+    <string name="post_image">Publicacion</string>
+    <string name="like_icon">Icono me gusta</string>
+    <string name="fav_icon">Icono de favorito</string>
+    <string name="divider_line">Divisor</string>
+
+    <string name="like">Me gusta</string>
+    <string name="comment">Comentar</string>
+    <string name="share">Compartir</string>
+
+    <string name="comments">Comentarios</string>
+    <string name="shared">Compartidos</string>
+
+    <string name="divider_end">Divisor final</string>
+    <string name="description">Descripcion</string>
+    <string name="upload">Cargar</string>
+    <string name="icon_upload">Icono de carga</string>
+    <string name="take_photo">Tomar foto</string>
+    <string name="open_gallery">Abrir galeria</string>
+</resources>

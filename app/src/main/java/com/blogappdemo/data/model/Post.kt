@@ -13,7 +13,7 @@ data class Post(
     val post_description: String = "",
     val poster: Poster? = null,
     val likes: Long = 0,
-    val shares: Long = 0,
+    var shares: Long = 0,
     val comments: Long = 0,
     @Exclude @JvmField //para excluir de firebase
     var liked: Boolean = false,

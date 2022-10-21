@@ -125,7 +125,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
             android:gravity="center"
-            tools:text="5 likes"
             app:layout_constraintTop_toTopOf="@id/constrains_layout_count"
             app:layout_constraintStart_toEndOf="@id/cv_fav_icon_notification"/>
 
@@ -134,22 +133,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="@dimen/margin_default"
             android:gravity="center"
-            tools:text="5 comments"
+            android:text="@string/comments"
             app:layout_constraintTop_toTopOf="@id/constrains_layout_count"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@id/tv_share_count"/>
 
         <TextView
             android:id="@+id/tv_share_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/margin_default"
+            android:layout_marginEnd="@dimen/margin_min"
             android:gravity="center"
-            tools:text="5 shared"
+            android:text="@string/shared"
             app:layout_constraintTop_toTopOf="@id/constrains_layout_count"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
