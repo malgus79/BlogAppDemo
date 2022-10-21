@@ -22,13 +22,13 @@ object TimeUtils {
         //diferencia del tiempo actual y el que le enviamos
         val diff = now - time
         return when {
-            diff < MINUTE_MILLIS -> "Just now"
-            diff < 2 * MINUTE_MILLIS -> "a minute ago"
-            diff < 60 * MINUTE_MILLIS -> "${diff / MINUTE_MILLIS} minutes ago"
-            diff < 2 * HOUR_MILLIS -> "an hour ago"
-            diff < 24 * HOUR_MILLIS -> "${diff / HOUR_MILLIS} hours ago"
-            diff < 48 * HOUR_MILLIS -> "yesterday"
-            else -> "${diff / DAY_MILLIS} days ago"
+            diff < MINUTE_MILLIS ->  "en este momento"
+            diff < 2 * MINUTE_MILLIS -> "hace 1 minuto"
+            diff < 60 * MINUTE_MILLIS -> "hace ${diff / MINUTE_MILLIS} minutos"
+            diff < 2 * HOUR_MILLIS -> "hace 1 hora"
+            diff < 24 * HOUR_MILLIS -> "hace ${diff / HOUR_MILLIS} horas"
+            diff < 48 * HOUR_MILLIS -> "ayer"
+            else -> "hace ${diff / DAY_MILLIS} días"
         }
     }
 
