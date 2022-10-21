@@ -21,7 +21,6 @@ import com.google.firebase.auth.FirebaseAuth
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
-    private lateinit var ly: LinearLayout
     private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
     private val viewModel by viewModels<AuthViewModel> {
         AuthViewModelFactory(AuthRepoImpl(
