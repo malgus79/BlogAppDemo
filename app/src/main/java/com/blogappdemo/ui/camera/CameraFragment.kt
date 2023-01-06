@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -26,41 +27,51 @@ import dagger.hilt.android.AndroidEntryPoint
 class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     private lateinit var binding: FragmentCameraBinding
+
     private var bitmap: Bitmap? = null
     private var photoSelectedUri: Uri? = null
+
+    private lateinit var photoResult: ActivityResultLauncher<Intent?>
+    private lateinit var galleryResult: ActivityResultLauncher<Intent?>
+
     private val viewModel by viewModels<CameraViewModel>()
-
-    private val photoResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val imageBitmap = it.data?.extras?.get(DATA) as Bitmap
-                binding.ivPostImage.setImageBitmap(imageBitmap)
-                bitmap = imageBitmap
-            } else {
-                binding.cvUploadPhoto.isEnabled = false
-            }
-        }
-
-    private val galleryResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                photoSelectedUri = it.data?.data
-                binding.ivPostImage.setImageURI(photoSelectedUri)
-            } else {
-                binding.cvUploadPhoto.isEnabled = false
-            }
-        }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCameraBinding.bind(view)
         binding.cvUploadPhoto.isEnabled = false
 
+        setupPhotoActivityResult()
+        setupGalleryActivityResult()
         openCamera()
         setupButtonUpLoad()
         setupOnClickActionButtons()
 
+    }
+
+    private fun setupPhotoActivityResult() {
+        photoResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    val imageBitmap = it.data?.extras?.get(DATA) as Bitmap
+                    binding.ivPostImage.setImageBitmap(imageBitmap)
+                    bitmap = imageBitmap
+                } else {
+                    binding.cvUploadPhoto.isEnabled = false
+                }
+            }
+    }
+
+    private fun setupGalleryActivityResult() {
+        galleryResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    photoSelectedUri = it.data?.data
+                    binding.ivPostImage.setImageURI(photoSelectedUri)
+                } else {
+                    binding.cvUploadPhoto.isEnabled = false
+                }
+            }
     }
 
     //abrir la camara
