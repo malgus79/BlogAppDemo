@@ -36,6 +36,8 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                 val imageBitmap = it.data?.extras?.get(DATA) as Bitmap
                 binding.ivPostImage.setImageBitmap(imageBitmap)
                 bitmap = imageBitmap
+            } else {
+                binding.cvUploadPhoto.isEnabled = false
             }
         }
 
@@ -44,6 +46,8 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             if (it.resultCode == Activity.RESULT_OK) {
                 photoSelectedUri = it.data?.data
                 binding.ivPostImage.setImageURI(photoSelectedUri)
+            } else {
+                binding.cvUploadPhoto.isEnabled = false
             }
         }
 
