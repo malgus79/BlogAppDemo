@@ -30,7 +30,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     private var photoSelectedUri: Uri? = null
     private val viewModel by viewModels<CameraViewModel>()
 
-    private val resultLauncher =
+    private val photoResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 val imageBitmap = it.data?.extras?.get(DATA) as Bitmap
@@ -67,7 +67,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     private fun openCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
-            resultLauncher.launch(takePictureIntent)
+            photoResult.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(
                 requireContext(),
@@ -148,7 +148,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     private fun takePhoto() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
-            resultLauncher.launch(takePictureIntent)
+            photoResult.launch(takePictureIntent)
             binding.cvUploadPhoto.isEnabled = true
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
