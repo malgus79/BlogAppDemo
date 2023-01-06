@@ -6,7 +6,7 @@
     <string name="profile">Profile</string>
 
     <string name="signin">SignIn</string>
-    <string name="not_have_an_account_sign_up">Not have an account ? Sign up</string>
+    <string name="not_have_an_account_sign_up">Not have an account ?  Sign up</string>
     <string name="signup">SignUp</string>
     <string name="create_profile">create profile</string>
     <string name="profile_button_logout">Sign Out</string>

@@ -25,33 +25,34 @@ import dagger.hilt.android.AndroidEntryPoint
 class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
 
     private lateinit var binding: FragmentSetupProfileBinding
-    private val viewModel by viewModels<AuthViewModel>()
     private var bitmap: Bitmap? = null
     private lateinit var resultLauncher: ActivityResultLauncher<Intent?>
+    private val viewModel by viewModels<AuthViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentSetupProfileBinding.bind(view)
 
-        val btnProfileImage = binding.ivProfileImage
-        btnProfileImage.setOnClickListener {
-            dispatchTakePictureIntent()
-        }
+        setupActivityResult()
+        setupCreateProfile()
+        setupTakePictureIntent()
 
+    }
+
+    private fun setupActivityResult() {
         //solucion al onActivityResult @deprecated
-        resultLauncher = registerForActivityResult(
-            ActivityResultContracts
-                .StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = it.data
-                val imageBitmap = data?.extras?.get(DATA) as Bitmap
-                binding.ivProfileImage.setImageBitmap(imageBitmap)
-                bitmap = imageBitmap
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = it.data
+                    val imageBitmap = data?.extras?.get(DATA) as Bitmap
+                    binding.ivProfileImage.setImageBitmap(imageBitmap)
+                    bitmap = imageBitmap
+                }
             }
-        }
+    }
 
-        //crear profile
+    private fun setupCreateProfile() {
         binding.btnCreateProfile.setOnClickListener {
             val username = binding.etUsername.text.toString().trim()
             val alertDialog =
@@ -78,15 +79,20 @@ class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
         }
     }
 
+    private fun setupTakePictureIntent() {
+        val btnProfileImage = binding.ivProfileImage
+        btnProfileImage.setOnClickListener {
+            dispatchTakePictureIntent()
+        }
+    }
+
     //abrir la camara
     private fun dispatchTakePictureIntent() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             resultLauncher.launch(takePictureIntent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(requireContext(),
-                (R.string.camera_app_not_found),
-                Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), (R.string.camera_app_not_found), Toast.LENGTH_SHORT).show()
         }
     }
 }

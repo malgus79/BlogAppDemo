@@ -5,7 +5,7 @@
     <string name="profile">Perfil</string>
 
     <string name="signin">Iniciar sesión</string>
-    <string name="not_have_an_account_sign_up">¿No tienes una cuenta? ? Registrate</string>
+    <string name="not_have_an_account_sign_up">¿No tienes una cuenta ?   Registrate</string>
     <string name="signup">Registrarse</string>
     <string name="create_profile">Crear perfil</string>
     <string name="profile_button_logout">Cerrar sesión</string>
