@@ -35,15 +35,16 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeScreenBinding.bind(view)
 
-        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            requireActivity().finish()
-        }
-        callback.isEnabled
+//        val result = listOf<Post>()
+//        initRecyclerView(result)
 
-        val result = listOf<Post>()
-        initRecyclerView(result)
+        setupDataUpload()
         configSwipe()
+        setupOnBackPressed()
 
+    }
+
+    private fun setupDataUpload() {
         //obtener data de <post> segun el lifecycle con stateFlow
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -122,6 +123,16 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
             }, 2000)
         }
     }
+
+    private fun setupOnBackPressed() {
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            requireActivity().finish()
+        }
+        callback.isEnabled
+    }
+
+
+    /* ---------------------------------- OnPostClickListener ---------------------------------- */
 
     //al hacer click en like
     override fun onLikeButtonClick(post: Post, liked: Boolean) {
