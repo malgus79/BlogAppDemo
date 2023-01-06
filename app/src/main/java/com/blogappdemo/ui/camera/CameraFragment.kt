@@ -13,7 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
 import com.blogappdemo.databinding.FragmentCameraBinding
@@ -52,15 +51,29 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCameraBinding.bind(view)
+        binding.cvUploadPhoto.isEnabled = false
 
         openCamera()
+        setupButtonUpLoad()
+        setupOnClickActionButtons()
 
-        with(binding) {
-            btnTakePhoto.setOnClickListener { takePhoto() }
-            btnOpenGallery.setOnClickListener { openGallery() }
+    }
+
+    //abrir la camara
+    private fun openCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        try {
+            resultLauncher.launch(takePictureIntent)
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(
+                requireContext(),
+                (R.string.cant_open_gallery),
+                Toast.LENGTH_SHORT
+            ).show()
         }
+    }
 
-
+    private fun setupButtonUpLoad() {
         binding.cvUploadPhoto.setOnClickListener { it ->
             with(binding) {
                 ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.teal_700))
@@ -73,14 +86,12 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                     .observe(viewLifecycleOwner) { result ->
                         when (result) {
                             is Result.Loading -> {
-                                Toast.makeText(requireContext(),
-                                    (R.string.uploading_photo),
-                                    Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(), (R.string.uploading_photo), Toast.LENGTH_SHORT)
+                                    .show()
                             }
                             is Result.Success -> {
-                                //findNavController().navigate(R.id.action_cameraFragment_to_homeScreenFragment)
-                                findNavController().popBackStack()
-                                binding.etDescription.setText("")
+                                clearFields()
                             }
                             is Result.Failure -> {
                                 showResultFailure()
@@ -95,14 +106,12 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                     .observe(viewLifecycleOwner) { result ->
                         when (result) {
                             is Result.Loading -> {
-                                Toast.makeText(requireContext(),
-                                    (R.string.uploading_photo),
-                                    Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(), (R.string.uploading_photo), Toast.LENGTH_SHORT)
+                                    .show()
                             }
                             is Result.Success -> {
-                                //findNavController().navigate(R.id.action_cameraFragment_to_homeScreenFragment)
-                                findNavController().popBackStack()
-                                binding.etDescription.setText("")
+                                clearFields()
                             }
                             is Result.Failure -> {
                                 showResultFailure()
@@ -114,15 +123,20 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         }
     }
 
-    //abrir la camara
-    private fun openCamera() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            resultLauncher.launch(takePictureIntent)
-        } catch (e: ActivityNotFoundException) {
-            Toast.makeText(requireContext(),
-                (R.string.cant_open_gallery),
-                Toast.LENGTH_SHORT).show()
+    private fun clearFields() {
+        with(binding) {
+            ivPostImage.setImageResource(R.drawable.ic_add_a_photo)
+            etDescription.setText("")
+            ivUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_light))
+            tvUpload.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_light))
+            cvUploadPhoto.isEnabled = false
+        }
+    }
+
+    private fun setupOnClickActionButtons() {
+        with(binding) {
+            btnTakePhoto.setOnClickListener { takePhoto() }
+            btnOpenGallery.setOnClickListener { openGallery() }
         }
     }
 
@@ -131,6 +145,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             resultLauncher.launch(takePictureIntent)
+            binding.cvUploadPhoto.isEnabled = true
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
                 (R.string.camera_app_not_found),
@@ -142,6 +157,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         galleryResult.launch(intent)
+        binding.cvUploadPhoto.isEnabled = true
     }
 
     //setear vacio el campo descripcion al salir del fragment
