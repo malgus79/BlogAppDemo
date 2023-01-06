@@ -56,6 +56,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                     val imageBitmap = it.data?.extras?.get(DATA) as Bitmap
                     binding.ivPostImage.setImageBitmap(imageBitmap)
                     bitmap = imageBitmap
+                    binding.cvUploadPhoto.isEnabled = true
                 } else {
                     binding.cvUploadPhoto.isEnabled = false
                 }
@@ -68,6 +69,7 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
                 if (it.resultCode == Activity.RESULT_OK) {
                     photoSelectedUri = it.data?.data
                     binding.ivPostImage.setImageURI(photoSelectedUri)
+                    binding.cvUploadPhoto.isEnabled = true
                 } else {
                     binding.cvUploadPhoto.isEnabled = false
                 }
@@ -160,7 +162,6 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             photoResult.launch(takePictureIntent)
-            binding.cvUploadPhoto.isEnabled = true
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
                 (R.string.camera_app_not_found), Toast.LENGTH_SHORT).show()
@@ -172,7 +173,6 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         try {
             galleryResult.launch(intent)
-            binding.cvUploadPhoto.isEnabled = true
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
                 (R.string.gallery_app_error), Toast.LENGTH_SHORT).show()
