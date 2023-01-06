@@ -52,6 +52,6 @@
     <string name="icon_upload">Icon upload</string>
     <string name="take_photo">Take photo</string>
     <string name="open_gallery">Open gallery</string>
-
+    <string name="gallery_app_error">An error occurred in gallery</string>
 
 </resources>

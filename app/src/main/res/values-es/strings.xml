@@ -51,4 +51,5 @@
     <string name="icon_upload">Icono de carga</string>
     <string name="take_photo">Tomar foto</string>
     <string name="open_gallery">Abrir galeria</string>
+    <string name="gallery_app_error">Ocurrió un error en galeria</string>
 </resources>

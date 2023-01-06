@@ -152,16 +152,20 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
             binding.cvUploadPhoto.isEnabled = true
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(requireContext(),
-                (R.string.camera_app_not_found),
-                Toast.LENGTH_SHORT).show()
+                (R.string.camera_app_not_found), Toast.LENGTH_SHORT).show()
         }
     }
 
     //abrir la galeria
     private fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        galleryResult.launch(intent)
-        binding.cvUploadPhoto.isEnabled = true
+        try {
+            galleryResult.launch(intent)
+            binding.cvUploadPhoto.isEnabled = true
+        } catch (e: ActivityNotFoundException) {
+            Toast.makeText(requireContext(),
+                (R.string.gallery_app_error), Toast.LENGTH_SHORT).show()
+        }
     }
 
     //setear vacio el campo descripcion al salir del fragment
@@ -175,5 +179,4 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
         val ly = binding.root
         Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
     }
-
 }
