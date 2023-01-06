@@ -16,20 +16,16 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
-import com.blogappdemo.data.remote.auth.AuthDataSource
 import com.blogappdemo.databinding.FragmentSetupProfileBinding
-import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
-import com.blogappdemo.presentation.auth.AuthViewModelFactory
 import com.blogappdemo.utils.Constants.DATA
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SetupProfileFragment : Fragment(R.layout.fragment_setup_profile) {
 
     private lateinit var binding: FragmentSetupProfileBinding
-    private val viewModel by viewModels<AuthViewModel> {
-        AuthViewModelFactory(AuthRepoImpl(
-            AuthDataSource()))
-    }
+    private val viewModel by viewModels<AuthViewModel>()
     private var bitmap: Bitmap? = null
     private lateinit var resultLauncher: ActivityResultLauncher<Intent?>
 

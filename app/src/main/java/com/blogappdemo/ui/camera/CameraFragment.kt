@@ -16,24 +16,20 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
-import com.blogappdemo.data.remote.camera.CameraDataSource
 import com.blogappdemo.databinding.FragmentCameraBinding
-import com.blogappdemo.domain.camera.CameraRepoImpl
 import com.blogappdemo.presentation.camera.CameraViewModel
-import com.blogappdemo.presentation.camera.CameraViewModelFactory
 import com.blogappdemo.utils.Constants.DATA
 import com.blogappdemo.utils.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CameraFragment : Fragment(R.layout.fragment_camera) {
 
     private lateinit var binding: FragmentCameraBinding
     private var bitmap: Bitmap? = null
     private var photoSelectedUri: Uri? = null
-    private val viewModel by viewModels<CameraViewModel> {
-        CameraViewModelFactory(CameraRepoImpl(
-            CameraDataSource()))
-    }
+    private val viewModel by viewModels<CameraViewModel>()
 
     private val resultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

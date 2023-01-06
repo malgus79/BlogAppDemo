@@ -2,13 +2,15 @@ package com.blogappdemo.presentation.auth
 
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.blogappdemo.core.Result
-import com.blogappdemo.domain.auth.AuthRepo
+import com.blogappdemo.domain.auth.AuthRepoImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(private val repo: AuthRepoImpl) : ViewModel() {
 
     //metodo de logeo
     fun signIn(email: String, password: String) = liveData(Dispatchers.IO) {
@@ -38,11 +40,5 @@ class AuthViewModel(private val repo: AuthRepo) : ViewModel() {
         } catch (e: Exception) {
             emit(Result.Failure(e))
         }
-    }
-}
-
-class AuthViewModelFactory(private val repo: AuthRepo) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(AuthRepo::class.java).newInstance(repo)
     }
 }

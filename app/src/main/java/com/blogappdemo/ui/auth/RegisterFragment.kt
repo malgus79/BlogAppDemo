@@ -8,21 +8,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
-import com.blogappdemo.core.*
-import com.blogappdemo.data.remote.auth.AuthDataSource
+import com.blogappdemo.core.Result
 import com.blogappdemo.databinding.FragmentRegisterBinding
-import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
-import com.blogappdemo.presentation.auth.AuthViewModelFactory
 import com.blogappdemo.utils.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     private lateinit var binding: FragmentRegisterBinding
-    private val viewModel by viewModels<AuthViewModel> {
-        AuthViewModelFactory(AuthRepoImpl(
-            AuthDataSource()))
-    }
+    private val viewModel by viewModels<AuthViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

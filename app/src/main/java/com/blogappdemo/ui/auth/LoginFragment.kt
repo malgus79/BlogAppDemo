@@ -2,30 +2,25 @@ package com.blogappdemo.ui.auth
 
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
-import com.blogappdemo.core.*
-import com.blogappdemo.data.remote.auth.AuthDataSource
+import com.blogappdemo.core.Result
 import com.blogappdemo.databinding.FragmentLoginBinding
-import com.blogappdemo.domain.auth.AuthRepoImpl
 import com.blogappdemo.presentation.auth.AuthViewModel
-import com.blogappdemo.presentation.auth.AuthViewModelFactory
 import com.blogappdemo.utils.*
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private lateinit var binding: FragmentLoginBinding
     private val firebaseAuth by lazy { FirebaseAuth.getInstance() }
-    private val viewModel by viewModels<AuthViewModel> {
-        AuthViewModelFactory(AuthRepoImpl(
-            AuthDataSource()))
-    }
+    private val viewModel by viewModels<AuthViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

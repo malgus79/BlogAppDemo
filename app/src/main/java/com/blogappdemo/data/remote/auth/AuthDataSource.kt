@@ -13,8 +13,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 
-class AuthDataSource {
+class AuthDataSource @Inject constructor() {
 
     //login
     suspend fun signIn(email: String, password: String): FirebaseUser? {

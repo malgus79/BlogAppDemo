@@ -3,8 +3,9 @@ package com.blogappdemo.domain.auth
 import android.graphics.Bitmap
 import com.blogappdemo.data.remote.auth.AuthDataSource
 import com.google.firebase.auth.FirebaseUser
+import javax.inject.Inject
 
-class AuthRepoImpl(private val dataSource: AuthDataSource) : AuthRepo {
+class AuthRepoImpl @Inject constructor(private val dataSource: AuthDataSource) : AuthRepo {
 
     override suspend fun signIn(email: String, password: String): FirebaseUser? =
         dataSource.signIn(email, password)

@@ -8,7 +8,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.blogappdemo.utils.hide
 import com.blogappdemo.utils.show
 import com.blogappdemo.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

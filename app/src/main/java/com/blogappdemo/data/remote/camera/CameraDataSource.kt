@@ -11,8 +11,9 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import java.io.ByteArrayOutputStream
 import java.util.*
+import javax.inject.Inject
 
-class CameraDataSource {
+class CameraDataSource @Inject constructor() {
 
     suspend fun uploadPhotoCamera(imageBitmap: Bitmap, description: String) {
         val user = FirebaseAuth.getInstance().currentUser

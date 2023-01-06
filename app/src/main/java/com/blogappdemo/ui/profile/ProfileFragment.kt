@@ -16,25 +16,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
+import com.blogappdemo.databinding.FragmentProfileBinding
+import com.blogappdemo.presentation.auth.AuthViewModel
+import com.blogappdemo.utils.Constants.DATA
 import com.blogappdemo.utils.hide
 import com.blogappdemo.utils.show
-import com.blogappdemo.data.remote.auth.AuthDataSource
-import com.blogappdemo.databinding.FragmentProfileBinding
-import com.blogappdemo.domain.auth.AuthRepoImpl
-import com.blogappdemo.presentation.auth.AuthViewModel
-import com.blogappdemo.presentation.auth.AuthViewModelFactory
-import com.blogappdemo.utils.Constants.DATA
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
     private lateinit var binding: FragmentProfileBinding
-    private val viewModel by viewModels<AuthViewModel> {
-        AuthViewModelFactory(AuthRepoImpl(
-            AuthDataSource()))
-    }
+    private val viewModel by viewModels<AuthViewModel>()
     private var bitmap: Bitmap? = null
     private lateinit var resultLauncher: ActivityResultLauncher<Intent?>
 

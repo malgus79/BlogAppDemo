@@ -3,13 +3,15 @@ package com.blogappdemo.presentation.camera
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.liveData
 import com.blogappdemo.core.Result
-import com.blogappdemo.domain.camera.CameraRepo
+import com.blogappdemo.domain.camera.CameraRepoImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
-class CameraViewModel(private val repo: CameraRepo) : ViewModel() {
+@HiltViewModel
+class CameraViewModel @Inject constructor(private val repo: CameraRepoImpl) : ViewModel() {
 
     fun uploadPhotoCamera(imageBitmap: Bitmap, description: String) = liveData(Dispatchers.IO) {
         emit(Result.Loading())
@@ -27,11 +29,5 @@ class CameraViewModel(private val repo: CameraRepo) : ViewModel() {
         } catch (e: Exception) {
             emit(Result.Failure(e))
         }
-    }
-}
-
-class CameraViewModelFactory(private val repo: CameraRepo) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return modelClass.getConstructor(CameraRepo::class.java).newInstance(repo)
     }
 }
