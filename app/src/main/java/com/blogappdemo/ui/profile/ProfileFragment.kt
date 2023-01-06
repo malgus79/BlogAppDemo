@@ -34,12 +34,20 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private var bitmap: Bitmap? = null
     private lateinit var resultLauncher: ActivityResultLauncher<Intent?>
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProfileBinding.bind(view)
 
-        //carga de datos en fragment
+        setupDataUpload()
+        setupActivityResult()
+        setupEditImageProfile()
+        updateNewImageProfile()
+        setupSignOut()
+
+    }
+
+    //carga de datos en fragment
+    private fun setupDataUpload() {
         val user = FirebaseAuth.getInstance().currentUser
         Glide.with(this).load(user?.photoUrl).centerCrop().into(binding.imgProfile)
         with(binding) {
@@ -48,31 +56,42 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             tvProfileEmail.text = user?.email
         }
         Log.d("Usuario:", "fotourl: ${user?.photoUrl} , nombre: ${user?.displayName} ")
+    }
 
-        //solucion al onActivityResult @deprecated
-        resultLauncher = registerForActivityResult(
-            ActivityResultContracts
-                .StartActivityForResult()
-        ) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = it.data
-                val imageBitmap = data?.extras?.get(DATA)
-                binding.imgProfile.setImageBitmap(imageBitmap as Bitmap?)
-                bitmap = imageBitmap
+    //solucion al onActivityResult @deprecated
+    private fun setupActivityResult() {
+        resultLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                if (it.resultCode == Activity.RESULT_OK) {
+                    val data: Intent? = it.data
+                    val imageBitmap = data?.extras?.get(DATA)
+                    binding.imgProfile.setImageBitmap(imageBitmap as Bitmap?)
+                    bitmap = imageBitmap
+                    with(binding) {
+                        btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_light))
+                        btnEditImage.setIconTintResource(R.color.white)
+                        btnEditConfirm.show()
+                    }
+                }
             }
-        }
+    }
 
-        //editar imagen de perfil
+    //editar imagen de perfil
+    private fun setupEditImageProfile() {
         binding.btnEditImage.setOnClickListener {
-            editImageProfile()
-            with(binding) {
-                btnEditImage.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.blue_light))
-                btnEditImage.setIconTintResource(R.color.white)
-                btnEditConfirm.show()
+
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            try {
+                resultLauncher.launch(intent)
+            } catch (e: ActivityNotFoundException) {
+                val ly = binding.root
+                Snackbar.make(ly, (R.string.application_not_found), Snackbar.LENGTH_LONG).show()
             }
         }
+    }
 
-        //actualizar nueva imagen en firebase
+    //actualizar nueva imagen en firebase
+    private fun updateNewImageProfile() {
         binding.btnEditConfirm.setOnClickListener {
             val username = binding.tvProfileName.text.toString().trim()
             val alertDialog =
@@ -87,7 +106,6 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                                 }
                                 is Result.Success -> {
                                     alertDialog.dismiss()
-
                                 }
                                 is Result.Failure -> {
                                     alertDialog.dismiss()
@@ -102,27 +120,13 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
                 btnEditConfirm.hide()
             }
         }
-
-        //logOut
-        binding.btnLogout.setOnClickListener {
-            signOut()
-        }
-    }
-
-    //abrir camara
-    private fun editImageProfile() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            resultLauncher.launch(intent)
-        } catch (e: ActivityNotFoundException) {
-            val ly = binding.root
-            Snackbar.make(ly, (R.string.application_not_found), Snackbar.LENGTH_LONG).show()
-        }
     }
 
     //logOut
-    private fun signOut() {
-        FirebaseAuth.getInstance().signOut()
-        activity?.finish()
+    private fun setupSignOut() {
+        binding.btnLogout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            activity?.finish()
+        }
     }
 }
