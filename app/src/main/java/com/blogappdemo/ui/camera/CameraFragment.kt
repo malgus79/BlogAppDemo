@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
 import com.blogappdemo.databinding.FragmentCameraBinding
@@ -189,5 +190,10 @@ class CameraFragment : Fragment(R.layout.fragment_camera) {
     private fun showResultFailure() {
         val ly = binding.root
         Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        findNavController().clearBackStack(R.id.homeScreenFragment)
     }
 }

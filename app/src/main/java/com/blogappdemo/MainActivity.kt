@@ -7,6 +7,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.blogappdemo.databinding.ActivityMainBinding
+import com.blogappdemo.utils.hide
+import com.blogappdemo.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupNavigation()
+        observeDestinationChange()
 
     }
 
@@ -32,5 +35,32 @@ class MainActivity : AppCompatActivity() {
 
         //configurar el bottomnavigation -> atachar al NavHost
         binding.bottomNavigationView.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+
+    }
+
+    private fun observeDestinationChange() {
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id) {
+                R.id.loginFragment -> {
+                    binding.bottomNavigationView.hide()
+                }
+
+                R.id.registerFragment -> {
+                    binding.bottomNavigationView.hide()
+                }
+
+                R.id.setupProfileFragment -> {
+                    binding.bottomNavigationView.hide()
+                }
+
+                else -> {
+                    binding.bottomNavigationView.show()
+                }
+            }
+        }
     }
 }

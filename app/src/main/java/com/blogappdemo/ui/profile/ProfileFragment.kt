@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.blogappdemo.R
 import com.blogappdemo.core.Result
 import com.blogappdemo.databinding.FragmentProfileBinding
@@ -128,5 +129,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
             FirebaseAuth.getInstance().signOut()
             activity?.finish()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        findNavController().clearBackStack(R.id.homeScreenFragment)
     }
 }
