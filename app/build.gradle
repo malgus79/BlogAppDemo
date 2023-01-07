@@ -42,19 +42,19 @@ android {
 
 dependencies {
 
-    def nav_version = "2.5.2"
-    def lifecycle_version = "2.6.0-alpha02"
+    def nav_version = "2.5.3"
+    def lifecycle_version = "2.6.0-alpha03"
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     //Import the BoM for the Firebase platform
-    implementation platform('com.google.firebase:firebase-bom:30.4.1')
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
     //Firestore
     implementation 'com.google.firebase:firebase-firestore-ktx'
     //Storage
@@ -84,11 +84,11 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
 
     //StateFlow
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     //Lifecycle
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.4.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha03"
 
     //Swipe
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
