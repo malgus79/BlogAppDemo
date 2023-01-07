@@ -10,6 +10,7 @@
     <string name="signup">SignUp</string>
     <string name="create_profile">create profile</string>
     <string name="profile_button_logout">Sign Out</string>
+    <string name="error_sign_in">Error sign in</string>
 
     <string name="username_is_empty">Username is empty</string>
     <string name="email_is_empty">Email is empty</string>
@@ -24,6 +25,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="profile_image">Profile image</string>
     <string name="profile_edit_confirm">Confirm edit</string>
+    <string name="error_create_user">Error create user</string>
 
     <string name="uploading_changes">"Uploading changes…"</string>
     <string name="uploading_photo">Uploading photo…</string>

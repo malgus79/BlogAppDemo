@@ -11,7 +11,6 @@ import com.blogappdemo.core.Result
 import com.blogappdemo.databinding.FragmentLoginBinding
 import com.blogappdemo.presentation.auth.AuthViewModel
 import com.blogappdemo.utils.*
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -100,15 +99,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                         progressBar.hide()
                         btnSignin.enable()
                     }
-                    showResultFailure()
+                    Toast.makeText(
+                        requireContext(),
+                        context?.getString(R.string.error_sign_in) + " ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
-    }
-
-    //snackbar transaction failure
-    private fun showResultFailure() {
-        val ly = binding.root
-        Snackbar.make(ly, (R.string.error_occurred), Snackbar.LENGTH_LONG).show()
     }
 }

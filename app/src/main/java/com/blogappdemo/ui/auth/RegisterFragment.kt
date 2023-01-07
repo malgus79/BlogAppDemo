@@ -3,6 +3,7 @@ package com.blogappdemo.ui.auth
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -67,6 +68,11 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                         progressBar.hide()
                         btnSignup.enable()
                     }
+                    Toast.makeText(
+                        requireContext(),
+                        context?.getString(R.string.error_create_user) + " ${result.exception}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         })

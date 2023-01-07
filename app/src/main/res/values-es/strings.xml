@@ -9,6 +9,7 @@
     <string name="signup">Registrarse</string>
     <string name="create_profile">Crear perfil</string>
     <string name="profile_button_logout">Cerrar sesión</string>
+    <string name="error_sign_in">Error al iniciar sesión</string>
 
     <string name="username_is_empty">Nombre de usuario está vacío</string>
     <string name="email_is_empty">Email está vacío</string>
@@ -23,6 +24,7 @@
     <string name="confirm_password">Confirmar contraseña</string>
     <string name="profile_image">Imagen de perfil</string>
     <string name="profile_edit_confirm">Confirmar cambios</string>
+    <string name="error_create_user">Error al crear usuario</string>
 
     <string name="uploading_changes">"Cargando cambios…"</string>
     <string name="uploading_photo">Cargando foto…</string>
@@ -52,4 +54,5 @@
     <string name="take_photo">Tomar foto</string>
     <string name="open_gallery">Abrir galeria</string>
     <string name="gallery_app_error">Ocurrió un error en galeria</string>
+
 </resources>
