@@ -1,5 +1,6 @@
 package com.blogappdemo.domain.home
 
+import android.widget.LinearLayout
 import com.blogappdemo.core.Result
 import com.blogappdemo.data.model.Post
 import com.blogappdemo.data.remote.home.HomeScreenDataSource
@@ -20,4 +21,7 @@ class HomeScreenRepoImpl @Inject constructor(private val dataSource: HomeScreenD
     override suspend fun registerCommentButtonState(postId: String, commented: Boolean) =
         dataSource.registerCommentButtonState(postId, commented)
 
+    override suspend fun deleteButtonState(postId: String) {
+        dataSource.deleteButtonState(postId)
+    }
 }

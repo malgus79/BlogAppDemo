@@ -95,4 +95,15 @@ class HomeScreenViewModel @Inject constructor(private val repo: HomeScreenRepoIm
             emit(Result.Failure(Exception(throwable.message)))
         }
     }
+
+    fun deletePost(postId: String) = liveData(Dispatchers.IO) {
+        emit(Result.Loading())
+        kotlin.runCatching {
+            repo.deleteButtonState(postId)
+        }.onSuccess {
+            emit(Result.Success(Unit))
+        }.onFailure { throwable ->
+            emit(Result.Failure(Exception(throwable.message)))
+        }
+    }
 }

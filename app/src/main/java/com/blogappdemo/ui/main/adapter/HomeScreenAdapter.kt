@@ -23,7 +23,7 @@ class HomeScreenAdapter(
 ) :
     RecyclerView.Adapter<BaseViewHolder<*>>() {
 
-    //listeners likes/shared/comments
+    //listeners likes/shared/comments/delete
     private var postClickListener: OnPostClickListener? = null
 
     init {
@@ -69,9 +69,11 @@ class HomeScreenAdapter(
             //Comment
             setupCommentCount(item)
             setCommentClickAction(item)
+            //Delete
+            setDeleteClickAction(item)
         }
 
-    /* --------------------------------------- HEADER --------------------------------------- */
+        /* --------------------------------------- HEADER --------------------------------------- */
         //foto de perfil y nombre del usuario
         private fun setupProfileInfo(post: Post) {
             Glide.with(context).load(post.poster?.profile_picture).centerCrop()
@@ -216,6 +218,13 @@ class HomeScreenAdapter(
                 tintHeartIcon(post)
                 //enviar al fragment si fue linkeado y su estado en ese momento
                 postClickListener?.onCommentButtonClick(post, post.commented)
+            }
+        }
+
+    /* --------------------------------------- DELETE --------------------------------------- */
+        private fun setDeleteClickAction(post: Post) {
+            binding.btnDelete.setOnClickListener {
+                postClickListener?.onDeleteButtonClick(post)
             }
         }
     }

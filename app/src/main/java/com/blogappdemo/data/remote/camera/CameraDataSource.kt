@@ -27,13 +27,17 @@ class CameraDataSource @Inject constructor() {
 
         user?.let {
             it.displayName?.let { displayName ->
-                FirebaseFirestore.getInstance().collection(POSTS).add(Post(
-                    poster = Poster(username = displayName,
-                        uid = user.uid,
-                        profile_picture = it.photoUrl.toString()),
-                    post_image = downloadUrl,
-                    post_description = description,
-                    likes = 0))
+                FirebaseFirestore.getInstance().collection(POSTS).add(
+                    Post(
+                        poster = Poster(
+                            username = displayName,
+                            uid = user.uid,
+                            profile_picture = it.photoUrl.toString()
+                        ),
+                        post_image = downloadUrl,
+                        post_description = description,
+                    )
+                )
             }
         }
     }
@@ -48,13 +52,17 @@ class CameraDataSource @Inject constructor() {
 
         user?.let {
             it.displayName?.let { displayName ->
-                FirebaseFirestore.getInstance().collection(POSTS).add(Post(
-                    poster = Poster(username = displayName,
-                        uid = user.uid,
-                        profile_picture = it.photoUrl.toString()),
-                    post_image = downloadUrl,
-                    post_description = description,
-                    likes = 0))
+                FirebaseFirestore.getInstance().collection(POSTS).add(
+                    Post(
+                        poster = Poster(
+                            username = displayName,
+                            uid = user.uid,
+                            profile_picture = it.photoUrl.toString()
+                        ),
+                        post_image = downloadUrl,
+                        post_description = description
+                    )
+                )
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.blogappdemo.data.remote.home
 
+import android.util.Log
 import com.blogappdemo.core.Result
 import com.blogappdemo.data.model.Post
 import com.blogappdemo.utils.Constants.COMMENTS
@@ -12,6 +13,9 @@ import com.blogappdemo.utils.Constants.POSTS_SHARED
 import com.blogappdemo.utils.Constants.SHARES
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -259,5 +263,37 @@ class HomeScreenDataSource @Inject constructor() {
         }.addOnFailureListener {
             throw Exception(it.message)
         }
+    }
+
+    /* --------------------------------------- DELETE --------------------------------------- */
+
+    fun deleteButtonState(postId: String) {
+
+        //Firestore
+        val databaseFirestore = FirebaseFirestore.getInstance()
+        databaseFirestore.collection(POSTS).document(postId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("Delete Firestore", "Success")
+            }
+            .addOnFailureListener {
+                Log.d("Delete Firestore", "Failure")
+            }
+
+        //Storage
+        val user = FirebaseAuth.getInstance().currentUser
+        val databaseStorage = FirebaseStorage.getInstance().getReference("${user?.uid}/posts/")
+
+        databaseStorage.listAll()
+            .addOnSuccessListener {
+                it.items.forEach { reference ->
+                    val deleteRef = Firebase.storage.reference.child(reference.path)
+                    deleteRef.delete()
+                }
+                Log.d("Delete Storage", "Success")
+            }
+            .addOnFailureListener {
+                Log.d("Delete Storage", "Failure")
+            }
     }
 }

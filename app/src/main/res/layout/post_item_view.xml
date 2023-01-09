@@ -13,6 +13,7 @@
         android:id="@+id/profile_picture"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:layout_marginBottom="@dimen/margin_min"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/tv_post_description"
@@ -38,6 +39,17 @@
         app:layout_constraintStart_toEndOf="@id/profile_picture"
         app:layout_constraintTop_toBottomOf="@id/tv_profile_name"
         tools:text="Hace 3 horas" />
+
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_delete_forever"
+        android:backgroundTint="@color/white"
+
+        app:layout_constraintTop_toTopOf="@id/profile_picture"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/delete" />
 
     <TextView
         android:id="@+id/tv_post_description"

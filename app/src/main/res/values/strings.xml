@@ -40,10 +40,12 @@
     <string name="like_icon">Like icon</string>
     <string name="fav_icon">Fav icon</string>
     <string name="divider_line">Divider line</string>
+    <string name="post_delete">Post deleted</string>
 
     <string name="like">Like</string>
     <string name="comment">Comment</string>
     <string name="share">Share</string>
+    <string name="delete">Delete</string>
 
     <string name="comments">Comments</string>
     <string name="shared">Shared</string>

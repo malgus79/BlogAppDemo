@@ -39,10 +39,12 @@
     <string name="like_icon">Icono me gusta</string>
     <string name="fav_icon">Icono de favorito</string>
     <string name="divider_line">Divisor</string>
+    <string name="post_delete">Publicación eliminada</string>
 
     <string name="like">Me gusta</string>
     <string name="comment">Comentar</string>
     <string name="share">Compartir</string>
+    <string name="delete">Eliminar</string>
 
     <string name="comments">Comentarios</string>
     <string name="shared">Compartidos</string>

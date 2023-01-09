@@ -187,6 +187,25 @@ class HomeScreenFragment : Fragment(R.layout.fragment_home_screen), OnPostClickL
         }
     }
 
+    override fun onDeleteButtonClick(post: Post) {
+        viewModel.deletePost(post.id).observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is Result.Loading -> {
+                    Log.d("Delete Transaction", "in progress...")
+                }
+                is Result.Success -> {
+                    Log.d("Delete Transaction", "Success")
+                    val ly = binding.root
+                    Snackbar.make(ly, (R.string.post_delete), Snackbar.LENGTH_LONG).show()
+                }
+                is Result.Failure -> {
+                    showResultFailure()
+                    Log.d("Delete Transaction", "Failure")
+                }
+            }
+        }
+    }
+
     //snackbar transaction failure
     private fun showResultFailure() {
         val ly = binding.root
