@@ -1,6 +1,6 @@
 # BlogBook
 
-Aplicacion simil Facebook
+Elementos utilizados:
 - MVVM
 - Clean architecture
 - Coroutines
